@@ -23,13 +23,10 @@
     "noUncheckedSideEffectImports": true,
 
     /* Alias path */
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["components/*"],
-      "@pages/*": ["pages/*"],
-      "@utils/*": ["utils/*"],
-      "@hooks/*": ["hooks/*"]
+      "@/*": ["./client/*"]
     }
   },
-  "include": ["src"]
+  "include": ["client"]
 }
