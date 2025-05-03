@@ -22,7 +22,7 @@ export default function Navbar() {
         <NavigationMenuLink asChild className='text-black'>
           <Link
             to='/'
-            className='px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded transition-colors'
+            className='px-4 py-2 text-xl font-medium hover:bg-gray-100 rounded transition-colors'
             onClick={() => setMobileMenuOpen(false)}
           >
             Home
@@ -30,35 +30,17 @@ export default function Navbar() {
         </NavigationMenuLink>
       </NavigationMenuItem>
 
-      {/* Docs with submenu */}
+      {/* Trending */}
       <NavigationMenuItem>
-        <NavigationMenuTrigger>Docs</NavigationMenuTrigger>
-        <NavigationMenuContent>
-          <ul className='p-4 w-48'>
-            <li>
-              <NavigationMenuLink asChild>
-                <Link
-                  to='/trending'
-                  className='block px-2 py-1 rounded hover:bg-gray-100'
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Trending
-                </Link>
-              </NavigationMenuLink>
-            </li>
-            <li>
-              <NavigationMenuLink asChild>
-                <Link
-                  to='/docs/components'
-                  className='block px-2 py-1 rounded hover:bg-gray-100'
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Most Popular
-                </Link>
-              </NavigationMenuLink>
-            </li>
-          </ul>
-        </NavigationMenuContent>
+        <NavigationMenuLink asChild className='text-black'>
+          <Link
+            to='/Trending'
+            className='px-4 py-2 text-xl font-medium hover:bg-gray-100 rounded transition-colors'
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Trending
+          </Link>
+        </NavigationMenuLink>
       </NavigationMenuItem>
 
       {/* About */}
@@ -66,7 +48,7 @@ export default function Navbar() {
         <NavigationMenuLink asChild className='text-black'>
           <Link
             to='/about'
-            className='px-4 py-2 text-sm font-medium hover:bg-gray-100 rounded transition-colors'
+            className='px-4 py-2 text-xl font-medium hover:bg-gray-100 rounded transition-colors'
             onClick={() => setMobileMenuOpen(false)}
           >
             About
@@ -87,7 +69,7 @@ export default function Navbar() {
   );
 
   return (
-    <nav className='w-full rounded-xl flex items-center justify-between py-4 bg-white shadow px-8 relative'>
+    <nav className='w-full  rounded-xl flex items-center justify-between py-4 bg-background shadow px-8 relative'>
       {/* Logo  */}
       <div className='flex items-center'>
         <Link to='/' className='flex items-center'>
@@ -113,7 +95,7 @@ export default function Navbar() {
       {isMobile && (
         <div>
           <button
-            className='group flex items-center justify-center relative z-10 [transition:all_0.5s_ease] rounded-[0.375rem] p-1 cursor-pointer  outline-none focus-visible:outline-0 '
+            className='group flex items-center justify-center relative z-50 [transition:all_0.5s_ease] rounded-[0.375rem] p-1 cursor-pointer  outline-none focus-visible:outline-0 '
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label='Open menu'
           >
@@ -155,15 +137,19 @@ export default function Navbar() {
             </svg>
           </button>
           {/* Mobile Menu Overlay */}
-          {mobileMenuOpen && (
-            <div className='absolute top-full right-0 left-0 z-50 bg-white shadow-lg rounded-b-xl animate-fade-in'>
-              <NavigationMenu>
-                <NavigationMenuList className='flex flex-col items-stretch p-4 space-y-2'>
-                  {menuLinks}
-                </NavigationMenuList>
-              </NavigationMenu>
-            </div>
-          )}
+          <div
+            className={`fixed inset-0 mt-[73px] z-10 flex items-center justify-center bg-background  transition-all duration-500 ease-in-out transform ${
+              mobileMenuOpen
+                ? 'translate-x-0 opacity-100 pointer-events-auto'
+                : 'translate-x-full opacity-0 pointer-events-none'
+            }`}
+          >
+            <NavigationMenu>
+              <NavigationMenuList className='flex flex-col items-center justify-center space-y-6                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  '>
+                {menuLinks}
+              </NavigationMenuList>
+            </NavigationMenu>
+          </div>
         </div>
       )}
     </nav>
