@@ -1,9 +1,7 @@
 import Navbar from '@/components/Navbar';
 import { Outlet } from 'react-router';
 
-type Props = {};
-
-function MainLayout({}: Props) {
+function MainLayout() {
   return (
     <div className='md:px-8 lg:px-16 2xl:px-64'>
       <Navbar />

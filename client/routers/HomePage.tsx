@@ -8,6 +8,7 @@ import {
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
 import { Link } from 'react-router';
+import Category from '@/components/Category';
 
 type Props = {};
 
@@ -84,6 +85,8 @@ const HomePage = (props: Props) => {
           </button>
         </Link>
       </div>
+      {/* CATEGORIES */}
+      <Category />
       {/* POST */}
       {/* POST LIST */}
     </div>
