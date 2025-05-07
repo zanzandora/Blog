@@ -9,6 +9,14 @@ import SingerPostPage from './routers/SingerPostPage.tsx';
 import WritePage from './routers/WritePage.tsx';
 import MainLayout from './layout/MainLayout.tsx';
 import HomePage from './routers/HomePage.tsx';
+import { ClerkProvider } from '@clerk/clerk-react';
+
+// Import your Publishable Key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
+
+if (!PUBLISHABLE_KEY) {
+  throw new Error('Missing Publishable Key');
+}
 
 const router = createBrowserRouter([
   {
@@ -20,17 +28,17 @@ const router = createBrowserRouter([
         errorElement: <div>404 Not Found</div>,
       },
       {
-        path: '/LoginPage',
+        path: '/login',
         element: <LoginPage />,
         errorElement: <div>404 Not Found</div>,
       },
       {
-        path: '/PostListPage',
+        path: '/post-list',
         element: <PostListPage />,
         errorElement: <div>404 Not Found</div>,
       },
       {
-        path: '/RegisterPage',
+        path: '/register',
         element: <RegisterPage />,
         errorElement: <div>404 Not Found</div>,
       },
@@ -40,7 +48,7 @@ const router = createBrowserRouter([
         errorElement: <div>404 Not Found</div>,
       },
       {
-        path: '/WritePage',
+        path: '/write',
         element: <WritePage />,
         errorElement: <div>404 Not Found</div>,
       },
@@ -49,5 +57,7 @@ const router = createBrowserRouter([
 ]);
 
 createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router} />
+  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+    <RouterProvider router={router} />
+  </ClerkProvider>
 );
