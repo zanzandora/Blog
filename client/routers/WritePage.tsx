@@ -2,8 +2,8 @@ import React from 'react';
 
 type Props = {};
 
-function WritePage({}: Props) {
-  return <div>Write</div>;
-}
+const WritePage = (props: Props) => {
+  return <div>WritePage</div>;
+};
 
 export default WritePage;

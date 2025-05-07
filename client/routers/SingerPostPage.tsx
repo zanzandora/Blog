@@ -2,8 +2,8 @@ import React from 'react';
 
 type Props = {};
 
-function SingerPostPage({}: Props) {
+const SingerPostPage = (props: Props) => {
   return <div>SingerPostPage</div>;
-}
+};
 
 export default SingerPostPage;

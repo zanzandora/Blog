@@ -11,6 +11,12 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/useIsMobie';
 import Image from './Image';
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  UserButton,
+} from '@clerk/clerk-react';
 
 export default function Navbar() {
   const isMobile = useIsMobile();
@@ -72,12 +78,19 @@ export default function Navbar() {
 
       {/* External Link */}
       <NavigationMenuItem>
-        <Button
-          className='rounded-full bg-blue-500 hover:bg-blue-800'
-          onClick={() => setMobileMenuOpen(false)}
-        >
-          Login
-        </Button>
+        <SignedOut>
+          <Link to='/login'>
+            <Button
+              className='rounded-full bg-blue-500 hover:bg-blue-800'
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Login
+            </Button>
+          </Link>
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </NavigationMenuItem>
     </>
   );
