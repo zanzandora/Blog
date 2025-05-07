@@ -10,6 +10,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/useIsMobie';
+import Image from './Image';
 
 export default function Navbar() {
   const isMobile = useIsMobile();
@@ -73,10 +74,12 @@ export default function Navbar() {
       {/* Logo  */}
       <div className='flex items-center'>
         <Link to='/' className='flex items-center'>
-          <img
-            src='/logo.jpg'
+          <Image
+            path='/logo.jpg'
             alt='Logo'
-            className='h-10 w-10 mr-3 rounded-full'
+            w={50}
+            h={50}
+            className='mr-3 rounded-full'
           />
           <span className='text-lg font-bold text-black'>MyApp</span>
         </Link>
