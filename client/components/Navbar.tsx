@@ -23,7 +23,7 @@ export default function Navbar() {
         <NavigationMenuLink asChild className='text-black'>
           <Link
             to='/'
-            className='px-4 py-2 text-xl font-medium hover:bg-gray-100 rounded transition-colors'
+            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
             onClick={() => setMobileMenuOpen(false)}
           >
             Home
@@ -36,10 +36,23 @@ export default function Navbar() {
         <NavigationMenuLink asChild className='text-black'>
           <Link
             to='/Trending'
-            className='px-4 py-2 text-xl font-medium hover:bg-gray-100 rounded transition-colors'
+            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
             onClick={() => setMobileMenuOpen(false)}
           >
             Trending
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+
+      {/* Most Popular */}
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className='text-black'>
+          <Link
+            to='/Trending'
+            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Most Poppular
           </Link>
         </NavigationMenuLink>
       </NavigationMenuItem>
@@ -49,7 +62,7 @@ export default function Navbar() {
         <NavigationMenuLink asChild className='text-black'>
           <Link
             to='/about'
-            className='px-4 py-2 text-xl font-medium hover:bg-gray-100 rounded transition-colors'
+            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
             onClick={() => setMobileMenuOpen(false)}
           >
             About
