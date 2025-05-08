@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from 'react-router';
 import Category from '@/components/Category';
+import FeturedPosts from '@/components/FeturedPosts';
 
 type Props = {};
 
@@ -53,7 +54,8 @@ const HomePage = (props: Props) => {
             viewBox='0 0 200 200'
             width='180'
             height='180'
-            className='text-lg tracking-widest animate-spin super-slow-spin'
+            // className='text-lg tracking-widest animate-spin super-slow-spin'
+            className='text-lg tracking-widest'
           >
             <path
               id='circlePath'
@@ -87,7 +89,8 @@ const HomePage = (props: Props) => {
       </div>
       {/* CATEGORIES */}
       <Category />
-      {/* POST */}
+      {/* FETURED POSTS */}
+      <FeturedPosts />
       {/* POST LIST */}
     </div>
   );
