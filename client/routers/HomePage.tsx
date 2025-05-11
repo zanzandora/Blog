@@ -10,12 +10,13 @@ import {
 import { Link } from 'react-router';
 import Category from '@/components/Category';
 import FeturedPosts from '@/components/FeturedPosts';
+import PostList from '@/components/PostList';
 
 type Props = {};
 
 const HomePage = (props: Props) => {
   return (
-    <div className='mt-4 flex flex-col gap-4'>
+    <div className='mt-4 flex flex-col gap-4 lg:mx-1 mx-4'>
       {/* BREADCRUMBS */}
       <Breadcrumb>
         <BreadcrumbList>
@@ -92,6 +93,10 @@ const HomePage = (props: Props) => {
       {/* FETURED POSTS */}
       <FeturedPosts />
       {/* POST LIST */}
+      <div>
+        <h1 className=' my-8 text-2xl text-gray-600'>Recent Post</h1>
+        <PostList />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from './Image';
 import { Link } from 'react-router';
 
@@ -17,7 +16,7 @@ const FeturedPosts = (props: Props) => {
         {/* details */}
         <div className='flex flex-row  items-center  gap-4'>
           <h1 className=' font-mono lg:text-lg '>01.</h1>
-          <Link to={'/'} className='text-blue-800 lg:text-lg text-5xl'>
+          <Link to={'/'} className='text-blue-800 lg:text-lg '>
             Web designer
           </Link>
           <span className='text-gray-500 '>2 day ago</span>
@@ -41,11 +40,16 @@ const FeturedPosts = (props: Props) => {
           <div className='w-2/3'>
             {/* details */}
             <div className='flex flex-row  items-center  gap-4 mb-4'>
-              <h1 className=' font-mono lg:text-lg '>01.</h1>
-              <Link to={'/'} className='text-blue-800 lg:text-lg text-5xl'>
+              <h1 className=' font-mono lg:text-lg text-3xl'>02.</h1>
+              <Link
+                to={'/'}
+                className='text-blue-800 lg:text-lg whitespace-nowrap'
+              >
                 Web designer
               </Link>
-              <span className='text-gray-500 '>2 day ago</span>
+              <span className='text-gray-500 lg:text-base text-sm'>
+                2 day ago
+              </span>
             </div>
             <Link
               to={'/'}
@@ -67,11 +71,16 @@ const FeturedPosts = (props: Props) => {
           <div className='w-2/3'>
             {/* details */}
             <div className='flex flex-row  items-center  gap-4 mb-4'>
-              <h1 className=' font-mono lg:text-lg '>01.</h1>
-              <Link to={'/'} className='text-blue-800 lg:text-lg text-5xl'>
+              <h1 className=' font-mono lg:text-lg text-3xl'>03.</h1>
+              <Link
+                to={'/'}
+                className='text-blue-800 lg:text-lg whitespace-nowrap'
+              >
                 Web designer
               </Link>
-              <span className='text-gray-500 '>2 day ago</span>
+              <span className='text-gray-500 lg:text-base text-sm'>
+                2 day ago
+              </span>
             </div>
             <Link
               to={'/'}
@@ -93,11 +102,16 @@ const FeturedPosts = (props: Props) => {
           <div className='w-2/3'>
             {/* details */}
             <div className='flex flex-row  items-center  gap-4 mb-4'>
-              <h1 className=' font-mono lg:text-lg '>01.</h1>
-              <Link to={'/'} className='text-blue-800 lg:text-lg text-5xl'>
+              <h1 className=' font-mono lg:text-lg text-3xl'>04.</h1>
+              <Link
+                to={'/'}
+                className='text-blue-800 lg:text-lg whitespace-nowrap'
+              >
                 Web designer
               </Link>
-              <span className='text-gray-500 '>2 day ago</span>
+              <span className='text-gray-500 lg:text-base text-sm'>
+                2 day ago
+              </span>
             </div>
             <Link
               to={'/'}
