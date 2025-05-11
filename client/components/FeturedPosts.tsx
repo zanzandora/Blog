@@ -12,6 +12,7 @@ const FeturedPosts = (props: Props) => {
           path='/default-image.jpg'
           alt='Demo Image'
           className=' rounded-3xl object-cover'
+          w={895}
         />
         {/* details */}
         <div className='flex flex-row  items-center  gap-4'>
@@ -32,11 +33,14 @@ const FeturedPosts = (props: Props) => {
         {/* one */}
         <div className='  lg:h-1/3 flex justify-between gap-4'>
           {/* Image */}
-          <Image
-            path='/default-image.jpg'
-            alt='Demo Image'
-            className=' rounded-3xl object-cover w-1/3 aspect-video'
-          />
+          <div className='w-1/3 aspect-video'>
+            <Image
+              path='/default-image.jpg'
+              alt='Demo Image'
+              className=' rounded-3xl object-cover h-full w-full'
+              w={298}
+            />
+          </div>
           <div className='w-2/3'>
             {/* details */}
             <div className='flex flex-row  items-center  gap-4 mb-4'>
@@ -63,11 +67,14 @@ const FeturedPosts = (props: Props) => {
         {/* two */}
         <div className='  lg:h-1/3 flex justify-between gap-4'>
           {/* Image */}
-          <Image
-            path='/default-image.jpg'
-            alt='Demo Image'
-            className=' rounded-3xl object-cover w-1/3 aspect-video'
-          />
+          <div className='w-1/3 aspect-video'>
+            <Image
+              path='/default-image.jpg'
+              alt='Demo Image'
+              className=' rounded-3xl object-cover h-full w-full'
+              w={298}
+            />
+          </div>
           <div className='w-2/3'>
             {/* details */}
             <div className='flex flex-row  items-center  gap-4 mb-4'>
@@ -94,11 +101,14 @@ const FeturedPosts = (props: Props) => {
         {/* three */}
         <div className='  lg:h-1/3 flex justify-between gap-4'>
           {/* Image */}
-          <Image
-            path='/default-image.jpg'
-            alt='Demo Image'
-            className=' rounded-3xl object-cover w-1/3 aspect-video'
-          />
+          <div className='w-1/3 aspect-video'>
+            <Image
+              path='/default-image.jpg'
+              alt='Demo Image'
+              className=' rounded-3xl object-cover h-full w-full'
+              w={298}
+            />
+          </div>
           <div className='w-2/3'>
             {/* details */}
             <div className='flex flex-row  items-center  gap-4 mb-4'>

@@ -1,4 +1,3 @@
-import React from 'react';
 import Image from './Image';
 import { Link } from 'react-router';
 
@@ -9,7 +8,11 @@ const PostListItems = (props: Props) => {
     <div className='flex flex-col xl:flex-row gap-8   '>
       {/* Image */}
       <div className='md:hidden xl:block xl:w-1/3'>
-        <Image path='/postItem.jpg' className='object-cover rounded-lg' />
+        <Image
+          path='/postItem.jpg'
+          className='object-cover rounded-lg'
+          w={735}
+        />
       </div>
 
       {/* Details */}
