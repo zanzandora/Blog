@@ -1,3 +1,4 @@
+import Comments from '@/components/Comments';
 import Image from '@/components/Image';
 import PostMenuActions from '@/components/PostMenuActions';
 import Search from '@/components/Search';
@@ -147,6 +148,7 @@ const SingerPostPage = (props: Props) => {
           <Search />
         </div>
       </div>
+      <Comments />
     </div>
   );
 };
