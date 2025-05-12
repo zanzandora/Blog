@@ -17,6 +17,7 @@ import {
   SignInButton,
   UserButton,
 } from '@clerk/clerk-react';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 export default function Navbar() {
   const isMobile = useIsMobile();
@@ -100,13 +101,10 @@ export default function Navbar() {
       {/* Logo  */}
       <div className='flex items-center'>
         <Link to='/' className='flex items-center'>
-          <Image
-            path='/logo.jpg'
-            alt='Logo'
-            w={50}
-            h={50}
-            className='mr-3 rounded-full'
-          />
+          <Avatar className='mr-3'>
+            <AvatarImage src='/logo.jpg' />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
           <span className='text-lg font-bold text-black'>MyApp</span>
         </Link>
       </div>

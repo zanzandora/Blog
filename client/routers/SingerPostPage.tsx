@@ -1,6 +1,7 @@
 import Image from '@/components/Image';
 import PostMenuActions from '@/components/PostMenuActions';
 import Search from '@/components/Search';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Link } from 'react-router';
 
 type Props = {};
@@ -102,12 +103,10 @@ const SingerPostPage = (props: Props) => {
           <h1 className=' mb-4 text-sm font-medium'>Author</h1>
           <div className='flex flex-col gap-2 '>
             <div className='flex items-center gap-2'>
-              <Image
-                path='/default-image.jpg'
-                className='  w-12 h-12 rounded-full object-cover'
-                w={40}
-                h={40}
-              />
+              <Avatar>
+                <AvatarImage src='/default-image.jpg' />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
               <Link to={'/'}>Join Metar</Link>
             </div>
             <p className='text-gray-500 text-sm py-2'>
