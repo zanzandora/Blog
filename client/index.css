@@ -35,6 +35,16 @@ h1 {
 .super-slow-spin {
   animation-duration: 10000ms;
 }
+.ql-container {
+  border: none !important;
+}
+.ql-toolbar {
+  border: none !important;
+}
+.ql-editor {
+  border: none !important;
+  height: 200px !important;
+}
 
 @media (prefers-color-scheme: light) {
   :root {
