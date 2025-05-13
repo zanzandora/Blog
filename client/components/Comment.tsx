@@ -1,12 +1,4 @@
-import React from 'react';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from './ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 type Props = {};

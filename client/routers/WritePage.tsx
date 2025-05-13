@@ -29,7 +29,10 @@ const WritePage = (props: Props) => {
     <div className='h-[calc(100vh-56px)] flex flex-col gap-6 '>
       <h1 className='text-lg font-light'>Create a New Post</h1>
       <form action='' className='flex flex-col  flex-1 gap-6'>
-        <Button className=' w-max bg-white text-gray-500 text-sm'>
+        <Button
+          variant={'ghost'}
+          className=' w-max bg-white text-gray-500 text-sm'
+        >
           Add a cover image
         </Button>
         <Input
