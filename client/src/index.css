@@ -32,24 +32,18 @@ h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+.super-slow-spin {
+  animation-duration: 10000ms;
 }
-button:hover {
-  border-color: #646cff;
+.ql-container {
+  border: none !important;
 }
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.ql-toolbar {
+  border: none !important;
+}
+.ql-editor {
+  border: none !important;
+  height: 200px !important;
 }
 
 @media (prefers-color-scheme: light) {
@@ -65,11 +59,9 @@ button:focus-visible {
   }
 }
 
-
-
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 240 100% 95%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 3.9%;
@@ -122,8 +114,6 @@ button:focus-visible {
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {
