@@ -4,9 +4,10 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --watch src --ext ts --exec tsx src/index.ts",
+    "dev": "concurrently -n \"SERVER,NGROK\" -c \"bgBlue.bold,bgGreen.bold\" \"nodemon --watch src --ext ts --exec tsx src/index.ts\" \"npm run ngrok\"",
     "start": "tsx src/index.ts",
-    "build": "tsc"
+    "build": "tsc",
+    "ngrok": "tsx  src/lib/scripts/start-ngrok.ts"
   },
   "keywords": [],
   "author": "",
@@ -22,11 +23,13 @@
     "@types/node": "^22.15.17",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
+    "concurrently": "^9.1.2",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^7.2.1",
+    "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.10",
     "tsx": "^4.19.4",
     "typescript": "^5.8.3"

@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env*
+.ngrok*
 !.env.example
 
 # Editor directories and files
