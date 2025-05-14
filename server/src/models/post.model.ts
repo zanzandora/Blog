@@ -32,8 +32,8 @@ const postSchema = new Schema(
       default: false,
     },
     visit: {
-      type: Boolean,
-      default: false,
+      type: Number,
+      default: 0,
     },
   },
   { timestamps: true } // Automatically create createdAt and updatedAt fields
