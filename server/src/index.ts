@@ -1,9 +1,11 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import { clerkMiddleware } from '@clerk/express';
 
 import commentRouter from './routers/comment.router';
 import postRouter from './routers/post.router';
 import userRouter from './routers/user.router';
+import webhookRouter from './routers/webhook.router';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import connectDB from './lib/connectDB';
@@ -11,6 +13,10 @@ import connectDB from './lib/connectDB';
 dotenv.config();
 
 const app = express();
+app.use(clerkMiddleware());
+
+app.use('/webhooks', webhookRouter);
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const httpServer = createServer(app);

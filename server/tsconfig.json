@@ -3,6 +3,7 @@
     "target": "ES2020",
     "module": "ESNext",
     "moduleResolution": "node",
+    "typeRoots": ["./types", "./node_modules/@types"],
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
@@ -16,6 +17,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "types"],
   "exclude": ["node_modules"]
 }

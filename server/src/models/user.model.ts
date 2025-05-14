@@ -2,14 +2,15 @@ import mongoose, { Schema } from 'mongoose';
 
 const userSchema = new Schema(
   {
-    username: {
+    clerkUserId: {
       type: String,
       required: true,
       unique: true,
     },
-    password: {
+    username: {
       type: String,
       required: true,
+      unique: true,
     },
     email: {
       type: String,
@@ -27,4 +28,4 @@ const userSchema = new Schema(
   { timestamps: true } // Automatically create createdAt and updatedAt fields
 );
 
-export default mongoose.model('User', userSchema);
+export default mongoose.model('user', userSchema);
