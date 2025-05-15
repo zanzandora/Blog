@@ -34,7 +34,22 @@ export const createPost = async (
       return;
     }
 
-    const post = new Post({ user: user._id, ...req.body });
+    let slug = req.body.title
+      .toString()
+      .toLowerCase()
+      .trim()
+      .replace(/[\s\W-]+/g, '-') // thay thế khoảng trắng và ký tự đặc biệt bằng dấu -
+      .replace(/^-+|-+$/g, '');
+
+    let counter = 1;
+
+    // Kiểm tra trùng lặp slug trong database
+    while (await Post.exists({ slug })) {
+      slug = `${slug}-${counter}`;
+      counter++;
+    }
+
+    const post = new Post({ user: user._id, slug, ...req.body });
     await post.save();
     res.status(201).json(post);
   } catch (error) {

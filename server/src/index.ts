@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import { clerkMiddleware } from '@clerk/express';
+import cors from 'cors';
 
 import commentRouter from './routers/comment.router';
 import postRouter from './routers/post.router';
@@ -12,7 +13,13 @@ import connectDB from './lib/connectDB';
 
 dotenv.config();
 
+const corsOptions = {
+  origin: process.env.CLIENT_URL,
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+};
+
 const app = express();
+app.use(cors(corsOptions));
 app.use(clerkMiddleware());
 
 app.use('/webhooks', webhookRouter);
