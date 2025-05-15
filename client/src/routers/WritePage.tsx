@@ -1,4 +1,4 @@
-import { useUser } from '@clerk/clerk-react';
+import { useAuth, useUser } from '@clerk/clerk-react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
 import { useState } from 'react';
@@ -10,25 +10,67 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
 import { Textarea } from '@/components/ui/textarea';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 
-type Props = {};
+type NewPost = {
+  title: FormDataEntryValue | null;
+  desc: FormDataEntryValue | null;
+  category: FormDataEntryValue | null;
+  content: string;
+};
 
-const WritePage = (props: Props) => {
+const WritePage = () => {
   const { isLoaded, isSignedIn } = useUser();
+  const { getToken } = useAuth();
 
   const [value, setValue] = useState('');
+
+  const mutation = useMutation({
+    mutationFn: async (newPost: NewPost) => {
+      const token = await getToken();
+      return axios.post(`${import.meta.env.VITE_API_URL}/posts`, newPost, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    },
+    onSuccess: () => {
+      alert('Đăng bài thành công!');
+    },
+    onError: () => {
+      // Xử lý khi có lỗi
+      alert('Có lỗi xảy ra khi đăng bài!');
+    },
+  });
   if (!isLoaded) return <div>Loading...</div>;
   if (!isLoaded && !isSignedIn) return <div>You should log in first</div>;
+
+  const handerSubmit = (e: any) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const newPost = {
+      title: formData.get('title'),
+      desc: formData.get('desc'),
+      category: formData.get('category'),
+      content: value,
+    };
+    console.log(newPost);
+    mutation.mutate(newPost);
+  };
 
   return (
     <div className='h-[calc(100vh-56px)] flex flex-col gap-6 '>
       <h1 className='text-lg font-light'>Create a New Post</h1>
-      <form action='' className='flex flex-col  flex-1 gap-6'>
+      <form
+        onSubmit={handerSubmit}
+        action=''
+        className='flex flex-col  flex-1 gap-6'
+      >
         <Button
           variant={'ghost'}
           className=' w-max bg-white text-gray-500 text-sm'
@@ -39,13 +81,14 @@ const WritePage = (props: Props) => {
           type='text'
           placeholder='My Awesome Story'
           className=' shadow-none border-none md:text-3xl text-sm  px-0'
+          name='title'
         />
         <div className='flex flex-col md:flex-row gap-4'>
           <Label htmlFor='cat' className='w-30  my-auto'>
             Choose a category:{' '}
           </Label>
-          <Select>
-            <SelectTrigger className='w-52 bg-white' name='cat' id='cat'>
+          <Select name='category'>
+            <SelectTrigger className='w-52 bg-white' id='cat'>
               <SelectValue placeholder='Select a category' />
             </SelectTrigger>
             <SelectContent>
