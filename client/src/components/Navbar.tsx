@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -15,13 +15,21 @@ import {
   SignedIn,
   SignedOut,
   SignInButton,
+  useAuth,
   UserButton,
 } from '@clerk/clerk-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 export default function Navbar() {
   const isMobile = useIsMobile();
+  const { getToken } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    getToken().then((token) => {
+      console.log(token);
+    });
+  }, []);
 
   const menuLinks = (
     <>
