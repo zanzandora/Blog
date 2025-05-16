@@ -1,10 +1,22 @@
 import Post from '@/models/post.model';
 import userModel from '@/models/user.model';
 import { NextFunction, Request, Response } from 'express';
+import ImageKit from 'imagekit';
 
 export const getPosts = async (req: Request, res: Response) => {
   const posts = await Post.find();
   res.status(200).json(posts);
+};
+
+export const uploadAuth = async (req: Request, res: Response) => {
+  const imagekit = new ImageKit({
+    urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY!,
+  });
+
+  const result = imagekit.getAuthenticationParameters();
+  res.send(result);
 };
 
 export const getPost = async (req: Request, res: Response) => {
