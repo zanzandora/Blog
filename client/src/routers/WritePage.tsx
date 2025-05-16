@@ -16,6 +16,9 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import { useMutation } from '@tanstack/react-query';
 import axios from 'axios';
+import { useToast } from '@/hooks/use-toast';
+import { ToastAction } from '@/components/ui/toast';
+import { useNavigate } from 'react-router-dom';
 
 type NewPost = {
   title: FormDataEntryValue | null;
@@ -29,6 +32,9 @@ const WritePage = () => {
   const { getToken } = useAuth();
 
   const [value, setValue] = useState('');
+  const { toast } = useToast();
+
+  const navigate = useNavigate();
 
   const mutation = useMutation({
     mutationFn: async (newPost: NewPost) => {
@@ -39,14 +45,25 @@ const WritePage = () => {
         },
       });
     },
-    onSuccess: () => {
-      alert('Đăng bài thành công!');
+
+    onSuccess: (res: any) => {
+      toast({
+        className: 'bg-green-500 text-white',
+        title: 'Post created successfully',
+      });
+      navigate(`/${res.data.slug}`);
     },
+
     onError: () => {
-      // Xử lý khi có lỗi
-      alert('Có lỗi xảy ra khi đăng bài!');
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem when creating your post ',
+        action: <ToastAction altText='Try again'>Try again</ToastAction>,
+      });
     },
   });
+
   if (!isLoaded) return <div>Loading...</div>;
   if (!isLoaded && !isSignedIn) return <div>You should log in first</div>;
 
@@ -62,6 +79,11 @@ const WritePage = () => {
     console.log(newPost);
     mutation.mutate(newPost);
   };
+  const toolbarOpstions = [
+    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
+    ['blockquote', 'code-block'],
+    ['link', 'image', 'video', 'formula'],
+  ];
 
   return (
     <div className='h-[calc(100vh-56px)] flex flex-col gap-6 '>
@@ -112,6 +134,7 @@ const WritePage = () => {
         <div>
           <ReactQuill
             theme='snow'
+            modules={{ toolbar: toolbarOpstions }}
             value={value}
             onChange={setValue}
             className=' rounded-md bg-white'
@@ -119,10 +142,18 @@ const WritePage = () => {
         </div>
         <Button
           type='submit'
-          className='bg-blue-800 w-max px-6 hover:bg-blue-500 '
+          disabled={mutation.isPending}
+          className='bg-blue-800 w-max px-6 hover:bg-blue-500 disabled:bg-blue-800'
         >
-          Send
+          {mutation.isPending ? 'Loading...' : 'Send'}
         </Button>
+        {mutation.isError && (
+          <div className='text-red-500'>
+            {mutation.error instanceof Error
+              ? mutation.error.message
+              : String(mutation.error)}{' '}
+          </div>
+        )}
       </form>
     </div>
   );

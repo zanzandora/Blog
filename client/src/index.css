@@ -43,7 +43,11 @@ h1 {
 }
 .ql-editor {
   border: none !important;
-  height: 200px !important;
+  min-height: 200px !important;
+  max-height: 1000px !important;
+}
+.ql-snow .ql-tooltip.ql-editing input[type='text'] {
+  color: #fff !important;
 }
 
 @media (prefers-color-scheme: light) {
