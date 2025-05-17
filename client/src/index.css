@@ -43,6 +43,7 @@ h1 {
 }
 .ql-editor {
   border: none !important;
+  height: auto !important;
   min-height: 200px !important;
   max-height: 1000px !important;
 }

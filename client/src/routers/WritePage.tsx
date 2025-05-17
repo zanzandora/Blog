@@ -1,7 +1,7 @@
 import { useAuth, useUser } from '@clerk/clerk-react';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -19,6 +19,8 @@ import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from '@/components/ui/toast';
 import { useNavigate } from 'react-router-dom';
+import Uploader from '@/components/Uploader';
+import Loader from '@/components/Loader';
 
 type NewPost = {
   title: FormDataEntryValue | null;
@@ -30,11 +32,27 @@ type NewPost = {
 const WritePage = () => {
   const { isLoaded, isSignedIn } = useUser();
   const { getToken } = useAuth();
+  const [progress, setProgress] = useState<number>(0);
+
+  const [cover, setCover] = useState('');
+  const [img, setImg] = useState('');
+  const [video, setVideo] = useState('');
 
   const [value, setValue] = useState('');
   const { toast } = useToast();
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (img) setValue((prev) => prev + `<p><image src="${img.url}"/></p>`);
+  }, [img]);
+
+  useEffect(() => {
+    if (video)
+      setValue(
+        (prev) => prev + `<p><iframe class="ql-video" src="${video.url}"/></p>`
+      );
+  }, [video]);
 
   const mutation = useMutation({
     mutationFn: async (newPost: NewPost) => {
@@ -64,7 +82,7 @@ const WritePage = () => {
     },
   });
 
-  if (!isLoaded) return <div>Loading...</div>;
+  if (!isLoaded) return <Loader />;
   if (!isLoaded && !isSignedIn) return <div>You should log in first</div>;
 
   const handerSubmit = (e: any) => {
@@ -79,11 +97,8 @@ const WritePage = () => {
     console.log(newPost);
     mutation.mutate(newPost);
   };
-  const toolbarOpstions = [
-    ['bold', 'italic', 'underline', 'strike'], // toggled buttons
-    ['blockquote', 'code-block'],
-    ['link', 'image', 'video', 'formula'],
-  ];
+
+  console.log(cover);
 
   return (
     <div className='h-[calc(100vh-56px)] flex flex-col gap-6 '>
@@ -93,18 +108,32 @@ const WritePage = () => {
         action=''
         className='flex flex-col  flex-1 gap-6'
       >
-        <Button
-          variant={'ghost'}
-          className=' w-max bg-white text-gray-500 text-sm'
-        >
-          Add a cover image
-        </Button>
+        <Uploader type='image' setData={setCover} onProgress={setProgress}>
+          <Button
+            type='button'
+            variant={'ghost'}
+            className=' w-max bg-white text-gray-500 text-sm'
+          >
+            Add a cover image
+          </Button>
+        </Uploader>
+        {progress > 0 && progress < 100 && (
+          <div className='w-full bg-gray-200 rounded h-3 mt-2'>
+            <div
+              className='bg-blue-600 h-3 rounded'
+              style={{ width: `${progress}%` }}
+            ></div>
+            <div className='text-xs text-gray-700 mt-1'>{progress}%</div>
+          </div>
+        )}
+
         <Input
           type='text'
           placeholder='My Awesome Story'
           className=' shadow-none border-none md:text-3xl text-sm  px-0'
           name='title'
         />
+
         <div className='flex flex-col md:flex-row gap-4'>
           <Label htmlFor='cat' className='w-30  my-auto'>
             Choose a category:{' '}
@@ -132,13 +161,59 @@ const WritePage = () => {
           className='bg-white '
         />
         <div>
-          <ReactQuill
-            theme='snow'
-            modules={{ toolbar: toolbarOpstions }}
-            value={value}
-            onChange={setValue}
-            className=' rounded-md bg-white'
-          />
+          <div className='flex flex-1 '>
+            <div className='flex flex-col gap-2 mr-2'>
+              <Uploader type='image' setData={setImg}>
+                🌆
+              </Uploader>
+              <Uploader type='video' setData={setVideo}>
+                ▶️
+              </Uploader>
+            </div>
+            <ReactQuill
+              theme='snow'
+              value={value}
+              modules={{
+                toolbar: {
+                  container: [
+                    [{ header: '1' }, { header: '2' }, { font: [] }],
+                    [{ size: [] }],
+                    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+                    [
+                      { list: 'ordered' },
+                      { list: 'bullet' },
+                      { indent: '-1' },
+                      { indent: '+1' },
+                    ],
+                    ['link', 'image', 'video'],
+                    ['code-block'],
+                    ['clean'],
+                  ],
+                },
+                clipboard: {
+                  matchVisual: false,
+                },
+              }}
+              formats={[
+                'header',
+                'font',
+                'size',
+                'bold',
+                'italic',
+                'underline',
+                'strike',
+                'blockquote',
+                'list',
+                'indent',
+                'link',
+                'image',
+                'video',
+                'code-block',
+              ]}
+              onChange={setValue}
+              className=' rounded-md bg-white flex-1'
+            />
+          </div>
         </div>
         <Button
           type='submit'
