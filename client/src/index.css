@@ -37,6 +37,7 @@ h1 {
 }
 .ql-container {
   border: none !important;
+  height: auto !important;
 }
 .ql-toolbar {
   border: none !important;

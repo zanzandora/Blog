@@ -23,6 +23,7 @@ import Uploader from '@/components/Uploader';
 import Loader from '@/components/Loader';
 
 type NewPost = {
+  img: string;
   title: FormDataEntryValue | null;
   desc: FormDataEntryValue | null;
   category: FormDataEntryValue | null;
@@ -34,7 +35,11 @@ const WritePage = () => {
   const { getToken } = useAuth();
   const [progress, setProgress] = useState<number>(0);
 
-  const [cover, setCover] = useState('');
+  const [cover, setCover] = useState<{
+    url?: string;
+    name?: string;
+    filePath?: string;
+  } | null>(null);
   const [img, setImg] = useState('');
   const [video, setVideo] = useState('');
 
@@ -89,6 +94,7 @@ const WritePage = () => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newPost = {
+      img: cover?.filePath || '',
       title: formData.get('title'),
       desc: formData.get('desc'),
       category: formData.get('category'),
@@ -98,8 +104,6 @@ const WritePage = () => {
     mutation.mutate(newPost);
   };
 
-  console.log(cover);
-
   return (
     <div className='h-[calc(100vh-56px)] flex flex-col gap-6 '>
       <h1 className='text-lg font-light'>Create a New Post</h1>
@@ -108,16 +112,37 @@ const WritePage = () => {
         action=''
         className='flex flex-col  flex-1 gap-6'
       >
-        <Uploader type='image' setData={setCover} onProgress={setProgress}>
-          <Button
-            type='button'
-            variant={'ghost'}
-            className=' w-max bg-white text-gray-500 text-sm'
-          >
-            Add a cover image
-          </Button>
+        <Uploader
+          type='image'
+          setData={setCover}
+          onProgress={(percent) => {
+            setProgress(percent);
+            if (percent === 100 || percent === 0) {
+              setTimeout(() => setProgress(0), 1000);
+            }
+          }}
+        >
+          <div className='flex items-center gap-3'>
+            <Button
+              type='button'
+              variant={'ghost'}
+              className=' w-max bg-white text-gray-500 text-sm'
+            >
+              Add a cover image
+            </Button>
+            {cover?.url && (
+              <img
+                src={cover.url}
+                alt={cover.name || 'cover'}
+                className='w-10 h-10 object-cover rounded'
+              />
+            )}
+            {!cover?.url && cover?.name && (
+              <span className='text-xs text-gray-500'>{cover.name}</span>
+            )}
+          </div>
         </Uploader>
-        {progress > 0 && progress < 100 && (
+        {progress > 0 && (
           <div className='w-full bg-gray-200 rounded h-3 mt-2'>
             <div
               className='bg-blue-600 h-3 rounded'
@@ -212,6 +237,7 @@ const WritePage = () => {
               ]}
               onChange={setValue}
               className=' rounded-md bg-white flex-1'
+              readOnly={0 > progress && progress < 100}
             />
           </div>
         </div>

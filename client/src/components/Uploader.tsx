@@ -55,6 +55,7 @@ const Uploader = ({
         (progressEvent.loaded / progressEvent.total) * 100
       );
       setProgress(percent);
+      onProgress?.(percent);
       if (onProgress) onProgress(percent);
 
       // Show uploading toast only once at the start
@@ -79,6 +80,7 @@ const Uploader = ({
   // Handler for upload success
   const handleSuccess = (res: any) => {
     setProgress(100);
+    onProgress?.(100);
     // Dismiss uploading toast if still showing
     dismiss('uploading-toast');
     // Show success toast
@@ -94,6 +96,7 @@ const Uploader = ({
   // Handler for upload error
   const handleError = (err: any) => {
     setProgress(0);
+    onProgress?.(0);
     dismiss('uploading-toast');
     toastShownRef.current = false;
     if (onError) onError(err);
