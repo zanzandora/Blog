@@ -4,8 +4,17 @@ import { NextFunction, Request, Response } from 'express';
 import ImageKit from 'imagekit';
 
 export const getPosts = async (req: Request, res: Response) => {
-  const posts = await Post.find();
-  res.status(200).json(posts);
+  const page = parseInt((req.query.page as string) || '1');
+  const limit = parseInt((req.query.limit as string) || '2');
+
+  const posts = await Post.find()
+    .limit(limit)
+    .skip((page - 1) * limit);
+
+  const total = await Post.countDocuments();
+  const hasMore = page * limit < total;
+
+  res.status(200).json({ posts, hasMore, page });
 };
 
 export const uploadAuth = async (req: Request, res: Response) => {

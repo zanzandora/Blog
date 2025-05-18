@@ -17,6 +17,8 @@ const Image: React.FC<ImageProps> = ({ path, w, h, className, alt }) => {
       className={className}
       loading='lazy'
       lqip={{ active: true, quality: 20 }}
+      width={w}
+      height={h}
       transformation={[{ width: w, height: h }]}
     />
   );
