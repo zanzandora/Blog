@@ -16,7 +16,7 @@ type postProps = {
   visit?: number;
 };
 
-const displayTime = (createdAt: Date) => {
+const displayTime = (createdAt: Date | string) => {
   const now = new Date();
   const timeDifference = now.getTime() - new Date(createdAt).getTime();
   const minutes = Math.floor(timeDifference / 1000 / 60);

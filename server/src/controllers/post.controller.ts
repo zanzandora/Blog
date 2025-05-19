@@ -29,7 +29,10 @@ export const uploadAuth = async (req: Request, res: Response) => {
 };
 
 export const getPost = async (req: Request, res: Response) => {
-  const post = await Post.findOne({ slug: req.params.slug });
+  const post = await Post.findOne({ slug: req.params.slug }).populate(
+    'user',
+    'username img'
+  );
   res.status(200).json(post);
 };
 
