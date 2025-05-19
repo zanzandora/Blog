@@ -16,7 +16,7 @@ const PostList = () => {
     queryKey: ['posts'],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
-        params: { page: pageParam },
+        params: { page: pageParam, limit: 5 },
       });
       return res.data;
     },
