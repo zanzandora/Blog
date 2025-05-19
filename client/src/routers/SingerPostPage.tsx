@@ -8,6 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Link, useParams } from 'react-router';
 import DOMPurify from 'dompurify';
+import { useEffect } from 'react';
 
 type Props = {};
 type Post = {
@@ -61,6 +62,11 @@ const SingerPostPage = (props: Props) => {
     queryKey: ['post', slug],
     queryFn: () => fetchPost(slug!),
   });
+
+  // Scroll lên đầu mỗi khi slug thay đổi
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, [slug]);
 
   if (isPending) {
     return <span>Loading...</span>;
