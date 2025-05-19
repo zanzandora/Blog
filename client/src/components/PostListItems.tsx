@@ -10,13 +10,13 @@ type postProps = {
   img: string;
   category: string;
   isFeature?: boolean;
-  createdAt: Date;
-  updatedAt?: Date;
+  createdAt: Date | string;
+  updatedAt?: Date | string;
   user: string;
   visit?: number;
 };
 
-const calTime = (createdAt: Date) => {
+const displayTime = (createdAt: Date) => {
   const now = new Date();
   const timeDifference = now.getTime() - new Date(createdAt).getTime();
   const minutes = Math.floor(timeDifference / 1000 / 60);
@@ -63,7 +63,7 @@ const PostListItems = ({ post }: { post: postProps }) => {
           <Link to='/test' className='text-blue-700'>
             {post.category || 'general'}
           </Link>
-          <span>{calTime(post.createdAt)}</span>
+          <span>{displayTime(post.createdAt)}</span>
         </div>
         <p className='text-gray-700 '>{post.desc || ''}</p>
         <Link to={`${post.slug}`} className=' underline text-blue-700 text-sm'>
