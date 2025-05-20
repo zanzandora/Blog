@@ -1,44 +1,13 @@
+import { timePassed } from '@/utils/timePassed';
 import Image from './Image';
 import { Link } from 'react-router';
-import { formatDate, formatTime } from '@/utils/time';
+import { Post } from '@/types';
 
-type postProps = {
-  title: string;
-  slug: string;
-  content: string;
-  desc?: string;
-  img: string;
-  category: string;
-  isFeature?: boolean;
-  createdAt: Date | string;
-  updatedAt?: Date | string;
-  user: string;
-  visit?: number;
+type Props = {
+  post: Post;
 };
 
-const displayTime = (createdAt: Date | string) => {
-  const now = new Date();
-  const timeDifference = now.getTime() - new Date(createdAt).getTime();
-  const minutes = Math.floor(timeDifference / 1000 / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (minutes < 1) {
-    return 'Now';
-  }
-  if (minutes < 60) {
-    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-  }
-  if (hours < 24) {
-    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  }
-  if (days === 1) {
-    return 'Yesterday ' + formatTime(createdAt);
-  }
-  return formatDate(createdAt);
-};
-
-const PostListItems = ({ post }: { post: postProps }) => {
+const PostListItems = ({ post }: Props) => {
   return (
     <div className='flex flex-col xl:flex-row gap-8 mb-12  min-h-20'>
       {/* Image */}
@@ -63,7 +32,7 @@ const PostListItems = ({ post }: { post: postProps }) => {
           <Link to='/test' className='text-blue-700'>
             {post.category || 'general'}
           </Link>
-          <span>{displayTime(post.createdAt)}</span>
+          <span>{timePassed(post.createdAt)}</span>
         </div>
         <p className='text-gray-700 '>{post.desc || ''}</p>
         <Link to={`${post.slug}`} className=' underline text-blue-700 text-sm'>

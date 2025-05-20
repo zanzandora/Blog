@@ -1,28 +1,34 @@
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { timePassed } from '@/utils/timePassed';
 
-type Props = {};
+type commentProps = {
+  user: {
+    username: string;
+    img: string;
+  };
+  desc: string;
+  createdAt: Date | string;
+};
 
-const Comment = (props: Props) => {
+const Comment = ({ comment }: { comment: commentProps }) => {
   return (
     <div>
       <Card>
         <CardHeader className='p-4 -mb-4'>
           <CardTitle className='flex items-center gap-4'>
             <Avatar>
-              <AvatarImage src='/logo.jpg' />
+              <AvatarImage src={comment.user.img} />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <span className=' font-medium'>Join Mater</span>
-            <span className=' text-gray-500 text-sm'>2 days ago</span>
+            <span className=' font-medium'>{comment.user.username}</span>
+            <span className=' text-gray-500 text-sm'>
+              {timePassed(comment.createdAt)}
+            </span>
           </CardTitle>
         </CardHeader>
         <CardContent className='p-4'>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
-            commodo dui at justo dignissim sodales. Vestibulum ante ipsum primis
-            in faucibus orci luctus et ultrices posuere cubilia curae;
-          </p>
+          <p>{comment.desc}</p>
         </CardContent>
       </Card>
     </div>

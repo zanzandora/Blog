@@ -3,15 +3,15 @@ import Image from '@/components/Image';
 import PostMenuActions from '@/components/PostMenuActions';
 import Search from '@/components/Search';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { formatDate, formatTime } from '@/utils/time';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Link, useParams } from 'react-router';
 import DOMPurify from 'dompurify';
 import { useEffect } from 'react';
+import { timePassed } from '@/utils/timePassed';
 
-type Props = {};
 type Post = {
+  _id: any;
   title: string;
   desc: string;
   content: string;
@@ -31,28 +31,6 @@ const fetchPost = async (slug: string): Promise<Post> => {
     `${import.meta.env.VITE_API_URL}/posts/${slug}`
   );
   return data;
-};
-
-const displayTime = (createdAt: Date | string) => {
-  const now = new Date();
-  const timeDifference = now.getTime() - new Date(createdAt).getTime();
-  const minutes = Math.floor(timeDifference / 1000 / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (minutes < 1) {
-    return 'Now';
-  }
-  if (minutes < 60) {
-    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-  }
-  if (hours < 24) {
-    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  }
-  if (days === 1) {
-    return 'Yesterday ' + formatTime(createdAt);
-  }
-  return formatDate(createdAt);
 };
 
 const SingerPostPage = (props: Props) => {
@@ -97,7 +75,7 @@ const SingerPostPage = (props: Props) => {
             <Link to={'/test'} className='text-blue-700'>
               {data.category}
             </Link>
-            <span>{displayTime(data.createdAt)}</span>
+            <span>{timePassed(data.createdAt)}</span>
           </div>
           <p className='text-gray-500 font-medium'>{data.desc}</p>
         </div>
@@ -139,7 +117,7 @@ const SingerPostPage = (props: Props) => {
               </Link>
             </div>
           </div>
-          <PostMenuActions />
+          <PostMenuActions post={data} />
           <h1 className='mt-8 mb-4 text-sm font-medium'>Categories</h1>
           <div className='flex flex-col gap-2 text-sm'>
             <Link to={'/'} className='underline'>
@@ -165,7 +143,7 @@ const SingerPostPage = (props: Props) => {
           <Search />
         </div>
       </div>
-      <Comments />
+      <Comments postId={data._id} />
     </div>
   );
 };
