@@ -1,3 +1,4 @@
+import commentModel from '@/models/comment.model';
 import Post from '@/models/post.model';
 import userModel from '@/models/user.model';
 import { NextFunction, Request, Response } from 'express';
@@ -88,7 +89,6 @@ export const deletePost = async (
 ) => {
   try {
     const clerkUserId = req.auth?.userId;
-    console.log('Headers:', req.headers.authorization);
 
     if (!clerkUserId) {
       return res.status(401).json({ error: 'Not authenticated' });
@@ -107,6 +107,7 @@ export const deletePost = async (
     if (!post) {
       return res.status(404).json({ error: 'Post not found' });
     }
+    await commentModel.deleteMany({ post: req.params.id });
     res.status(200).json({ message: 'Post deleted successfully' });
   } catch (error) {
     next(error);
