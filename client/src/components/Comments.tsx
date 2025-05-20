@@ -17,7 +17,6 @@ type commentProps = {
 };
 
 const fetchComments = async (postId: any): Promise<commentProps[]> => {
-  // Thay đổi endpoint phù hợp với backend của bạn
   const { data } = await axios.get(
     `${import.meta.env.VITE_API_URL}/comments/${postId}`
   );
@@ -123,7 +122,7 @@ const Comments = ({ postId }: { postId: any }) => {
             />
           )}
           {data.map((comment: any) => (
-            <Comment key={comment._id} comment={comment} />
+            <Comment key={comment._id} comment={comment} postId={postId} />
           ))}
         </>
       )}

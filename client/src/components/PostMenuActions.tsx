@@ -32,9 +32,12 @@ const PostMenuActions = ({ post }: Props) => {
         },
       });
     },
+    enabled: !!user,
   });
 
-  const isSaved = savedPosts?.data.some((p) => p == post._id) || false;
+  const isAdmin = user?.publicMetadata?.role === 'admin' || false;
+  const isSaved =
+    savedPosts?.data.some((p: string | undefined) => p == post._id) || false;
 
   const queryClient = useQueryClient();
 
@@ -97,6 +100,12 @@ const PostMenuActions = ({ post }: Props) => {
   });
   const handleSave = () => {
     if (!user) {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Can not save this post.',
+        description: 'You have to login first ',
+        action: <ToastAction altText='Try again'>Come back</ToastAction>,
+      });
       return navigate('/login');
     }
     saveMutation.mutate();
@@ -109,38 +118,24 @@ const PostMenuActions = ({ post }: Props) => {
   return (
     <div>
       <h1 className='mt-8 mb-4 text-sm font-medium'>Action</h1>
-      {isPending ? (
-        'Loading...'
-      ) : isError ? (
-        'Saved post failed'
-      ) : (
-        <div
-          onClick={handleSave}
-          className='flex items-center gap-2 pb-2 text-sm cursor-pointer'
-        >
-          <Bookmark
-            color='blue'
-            fill={
-              saveMutation.isPending
-                ? isSaved
-                  ? 'none'
-                  : 'blue'
-                : isSaved
-                ? 'blue'
-                : 'none'
-            }
-          />
-
-          {saveMutation.isPending ? (
-            <span className=' text-xs text-gray-400'>Progress...</span>
-          ) : (
-            <span>Save post</span>
-          )}
-        </div>
-      )}
+      <div
+        onClick={handleSave}
+        className='flex items-center gap-2 pb-2 text-sm cursor-pointer'
+      >
+        <Bookmark
+          color='blue'
+          fill={(saveMutation.isPending ? !isSaved : isSaved) ? 'blue' : 'none'}
+        />
+        {saveMutation.isPending ? (
+          <span className='text-xs text-gray-400'>Progress...</span>
+        ) : (
+          <span>Save post</span>
+        )}
+      </div>
       {user &&
-        post.user.username ===
-          `${user.firstName || ''} ${user.lastName || ''}`.trim() && (
+        (post.user.username ===
+          `${user.firstName || ''} ${user.lastName || ''}`.trim() ||
+          isAdmin) && (
           <div
             onClick={handleDelete}
             className='flex items-center gap-2 py-2 text-sm cursor-pointer'
