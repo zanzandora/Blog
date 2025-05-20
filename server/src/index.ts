@@ -70,3 +70,10 @@ httpServer.listen(port, () => {
   connectDB();
   console.log(`Example app listening on port  http://localhost:${port}`);
 });
+
+process.on('SIGINT', async () => {
+  httpServer.close(() => {
+    console.log('Server closed');
+    process.exit(0);
+  });
+});

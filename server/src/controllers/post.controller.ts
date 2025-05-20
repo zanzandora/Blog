@@ -1,5 +1,5 @@
 import commentModel from '@/models/comment.model';
-import Post from '@/models/post.model';
+import postModal from '@/models/post.model';
 import userModel from '@/models/user.model';
 import { NextFunction, Request, Response } from 'express';
 import ImageKit from 'imagekit';
@@ -8,11 +8,12 @@ export const getPosts = async (req: Request, res: Response) => {
   const page = parseInt((req.query.page as string) || '1');
   const limit = parseInt((req.query.limit as string) || '2');
 
-  const posts = await Post.find()
+  const posts = await postModal
+    .find()
     .limit(limit)
     .skip((page - 1) * limit);
 
-  const total = await Post.countDocuments();
+  const total = await postModal.countDocuments();
   const hasMore = page * limit < total;
 
   res.status(200).json({ posts, hasMore, page });
@@ -30,10 +31,9 @@ export const uploadAuth = async (req: Request, res: Response) => {
 };
 
 export const getPost = async (req: Request, res: Response) => {
-  const post = await Post.findOne({ slug: req.params.slug }).populate(
-    'user',
-    'username img'
-  );
+  const post = await postModal
+    .findOne({ slug: req.params.slug })
+    .populate('user', 'username img');
   res.status(200).json(post);
 };
 
@@ -69,12 +69,12 @@ export const createPost = async (
     let counter = 1;
 
     // Kiểm tra trùng lặp slug trong database
-    while (await Post.exists({ slug })) {
+    while (await postModal.exists({ slug })) {
       slug = `${slug}-${counter}`;
       counter++;
     }
 
-    const post = new Post({ user: user._id, slug, ...req.body });
+    const post = new postModal({ user: user._id, slug, ...req.body });
     await post.save();
     res.status(201).json(post);
   } catch (error) {
@@ -93,6 +93,14 @@ export const deletePost = async (
     if (!clerkUserId) {
       return res.status(401).json({ error: 'Not authenticated' });
     }
+    const role = req.auth.sessionClaims?.metadata?.role || false;
+
+    if (role === 'admin') {
+      await postModal.findOneAndDelete({
+        _id: req.params.id,
+      });
+      res.status(200).json({ message: 'Post deleted successfully' });
+    }
 
     const user = await userModel.findOne({ clerkUserId });
 
@@ -100,7 +108,7 @@ export const deletePost = async (
       return res.status(401).json({ error: 'User not found' });
     }
 
-    const post = await Post.findOneAndDelete({
+    const post = await postModal.findOneAndDelete({
       _id: req.params.id,
       user: user?._id,
     });

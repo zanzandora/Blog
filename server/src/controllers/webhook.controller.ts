@@ -31,20 +31,44 @@ export const clerkWebhook = async (req: any, res: any) => {
     } = data;
 
     const email = email_addresses?.[0]?.email_address;
+    // Tạo username duy nhất bằng cách thêm timestamp nếu cần
+    let baseUsername =
+      `${first_name || ''} ${last_name || ''}`.trim() ||
+      username ||
+      `user-${Date.now()}`;
 
-    // Tạo user nếu chưa có
-    const existingUser = await userModel.findOne({ clerkUserId: id });
-    if (!existingUser) {
+    // Loại bỏ khoảng trắng và ký tự đặc biệt (tuỳ chỉnh theo yêu cầu)
+    baseUsername = baseUsername.replace(/\s+/g, '-').toLowerCase();
+
+    let finalUsername = baseUsername;
+    let counter = 1;
+
+    /// Kiểm tra username đã tồn tại chưa
+    while (true) {
+      const existingUser = await userModel.findOne({ username: finalUsername });
+      if (!existingUser) break;
+      finalUsername = `${baseUsername}-${counter}`;
+      counter++;
+    }
+
+    // Tạo user
+    try {
       await userModel.create({
         clerkUserId: id,
         email: email,
-        username:
-          `${first_name || ''} ${last_name || ''}`.trim() ||
-          username ||
-          `user-${Date.now()}`,
+        username: finalUsername, // Sử dụng username đã kiểm tra
         img: profile_image_url,
       });
+    } catch (error: any) {
+      if (error.code === 11000) {
+        // MongoDB duplicate key error
+        res.status(409).json({ message: 'Duplicate username detected' });
+      } else {
+        res.status(500).json({ message: 'Internal server error' });
+      }
+      return;
     }
+
     res.status(200).json({
       message: 'clerk webhook created user successfully',
     });
