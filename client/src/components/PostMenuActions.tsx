@@ -1,5 +1,5 @@
 import { useAuth, useUser } from '@clerk/clerk-react';
-import { Trash2, Bookmark } from 'lucide-react';
+import { Trash2, Bookmark, Star } from 'lucide-react';
 import { Post } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -98,6 +98,37 @@ const PostMenuActions = ({ post }: Props) => {
       });
     },
   });
+
+  const featureMutation = useMutation({
+    mutationFn: async () => {
+      const token = await getToken();
+      return axios.patch(
+        `${import.meta.env.VITE_API_URL}/posts/feature`,
+        {
+          postId: post._id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    },
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['post', post.slug] });
+    },
+
+    onError: () => {
+      toast({
+        variant: 'destructive',
+        title: 'Uh oh! Something went wrong.',
+        description: 'There was a problem when delete your post ',
+        action: <ToastAction altText='Try again'>Try again</ToastAction>,
+      });
+    },
+  });
+
   const handleSave = () => {
     if (!user) {
       toast({
@@ -115,9 +146,14 @@ const PostMenuActions = ({ post }: Props) => {
     deleteMutation.mutate();
   };
 
+  const handleFeature = () => {
+    featureMutation.mutate();
+  };
+
   return (
     <div>
       <h1 className='mt-8 mb-4 text-sm font-medium'>Action</h1>
+      {/* SAVE BTN */}
       <div
         onClick={handleSave}
         className='flex items-center gap-2 pb-2 text-sm cursor-pointer'
@@ -132,6 +168,30 @@ const PostMenuActions = ({ post }: Props) => {
           <span>Save post</span>
         )}
       </div>
+
+      {/* FEATURE BTN */}
+      {isAdmin && (
+        <div
+          onClick={handleFeature}
+          className='flex items-center gap-2 pb-2 text-sm cursor-pointer'
+        >
+          <Star
+            color=' #efd425'
+            fill={
+              (featureMutation.isPending ? !post.isFeature : post.isFeature)
+                ? 'yellow'
+                : 'none'
+            }
+          />
+          {featureMutation.isPending ? (
+            <span className='text-xs text-gray-400'>Progress...</span>
+          ) : (
+            <span>Feature post</span>
+          )}
+        </div>
+      )}
+
+      {/* DELETE BTN */}
       {user &&
         (post.user.username ===
           `${user.firstName || ''} ${user.lastName || ''}`.trim() ||

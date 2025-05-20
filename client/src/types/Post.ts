@@ -8,6 +8,7 @@ export type Post = {
     img: string;
   };
   category: string;
+  isFeature?: boolean;
   createdAt: Date | string;
   img: string;
   slug: string;

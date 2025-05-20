@@ -1,6 +1,7 @@
 import {
   createPost,
   deletePost,
+  featurePost,
   getPost,
   getPosts,
   uploadAuth,
@@ -13,6 +14,7 @@ const expressRouter = Router();
 expressRouter.get('/', getPosts);
 expressRouter.get('/upload-auth', uploadAuth);
 expressRouter.get('/:slug', getPost);
+expressRouter.patch('/feature', featurePost);
 expressRouter.post('/', requireAuth(), createPost);
 expressRouter.delete('/:id', requireAuth(), deletePost);
 

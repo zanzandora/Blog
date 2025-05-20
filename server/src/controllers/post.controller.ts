@@ -37,6 +37,46 @@ export const getPost = async (req: Request, res: Response) => {
   res.status(200).json(post);
 };
 
+export const featurePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const clerkUserId = req.auth?.userId;
+    const postId = req.body.postId;
+
+    if (!clerkUserId) {
+      return res.status(401).json({ error: 'Not authenticated' });
+    }
+    const role = req.auth.sessionClaims?.metadata?.role || 'user';
+
+    if (role !== 'admin') {
+      return res.status(403).json({ message: 'You cannot feature posts !' });
+    }
+
+    const post = await postModal.findById(postId);
+
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    const updatePost = await postModal.findByIdAndUpdate(
+      postId,
+      {
+        isFeature: !post.isFeature,
+      },
+      { new: true }
+    );
+
+    setTimeout(() => {
+      res.status(200).json(updatePost);
+    }, 1000);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const createPost = async (
   req: Request,
   res: Response,
@@ -93,7 +133,7 @@ export const deletePost = async (
     if (!clerkUserId) {
       return res.status(401).json({ error: 'Not authenticated' });
     }
-    const role = req.auth.sessionClaims?.metadata?.role || false;
+    const role = req.auth.sessionClaims?.metadata?.role || 'user';
 
     if (role === 'admin') {
       await postModal.findOneAndDelete({
