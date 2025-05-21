@@ -1,9 +1,15 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useMemo } from 'react';
 import PostListItems from './PostListItems';
+import { useSearchParams } from 'react-router';
 
 const PostList = () => {
+  const [searchParams] = useSearchParams();
+  const searchParamsObj = useMemo(() => {
+    return Object.fromEntries(searchParams.entries());
+  }, [searchParams]);
+
   const {
     data,
     fetchNextPage,
@@ -13,10 +19,10 @@ const PostList = () => {
     error,
     status,
   } = useInfiniteQuery({
-    queryKey: ['posts'],
+    queryKey: ['posts', searchParamsObj],
     queryFn: async ({ pageParam = 1 }) => {
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
-        params: { page: pageParam, limit: 5 },
+        params: { page: pageParam, limit: 10, ...searchParamsObj },
       });
       return res.data;
     },
@@ -52,18 +58,11 @@ const PostList = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  // Fetch trang đầu tiên khi component mount
-  useEffect(() => {
-    if (allPosts.length === 0 && !isFetching) {
-      fetchNextPage();
-    }
-  }, []);
-
   if (isFetching && allPosts.length === 0) return <div>Loading...</div>;
   if (status === 'error') return <div>Error: {error.message}</div>;
 
   return (
-    <div className='space-y-8'>
+    <div className=''>
       {allPosts.map((post) => (
         <PostListItems key={post._id} post={post} />
       ))}

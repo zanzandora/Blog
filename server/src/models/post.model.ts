@@ -44,4 +44,6 @@ const postSchema = new Schema(
   { timestamps: true } // Automatically create createdAt and updatedAt fields
 );
 
+postSchema.index({ title: 'text' });
+
 export default mongoose.model('post', postSchema);

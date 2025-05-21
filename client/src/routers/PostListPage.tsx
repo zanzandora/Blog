@@ -1,6 +1,5 @@
 import PostList from '@/components/PostList';
 import SideMenu from '@/components/SideMenu';
-import React from 'react';
 
 type Props = {};
 

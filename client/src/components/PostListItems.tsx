@@ -25,11 +25,17 @@ const PostListItems = ({ post }: Props) => {
         </Link>
         <div className='flex items-center text-gray-400 text-sm gap-2'>
           <span>Write by</span>
-          <Link to='/test' className='text-blue-700'>
-            Joint Metar
+          <Link
+            to={`/post-list?author=${encodeURIComponent(post.user.username)}`}
+            className='text-blue-700'
+          >
+            {post.user.username}
           </Link>
           <span>on</span>
-          <Link to='/test' className='text-blue-700'>
+          <Link
+            to={`/post-list?cat=${encodeURIComponent(post.category)}`}
+            className='text-blue-700'
+          >
             {post.category || 'general'}
           </Link>
           <span>{timePassed(post.createdAt)}</span>

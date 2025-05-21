@@ -2,6 +2,7 @@ import { Separator } from '@/components/ui/separator';
 import { Link } from 'react-router';
 import { Input } from './ui/input';
 import { SearchIcon } from 'lucide-react';
+import Search from './Search';
 
 type Props = {};
 
@@ -40,7 +41,7 @@ const Category = (props: Props) => {
           Deep learning
         </Link>
         <Link
-          to={'/post-list?cat=others'}
+          to={'/post-list?cat=side-story'}
           className='hover:bg-blue-50 text-gray-800 rounded-full px-4 py-2 whitespace-nowrap'
         >
           Side story
@@ -51,13 +52,7 @@ const Category = (props: Props) => {
         className='p-[1.5px] h-5 rounded-sm bg-black'
       />
       <div className='relative w-full max-w-fit'>
-        <span className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
-          <SearchIcon className='text-gray-500 w-5 h-5' />
-        </span>
-        <Input
-          placeholder='Search...'
-          className='bg-gray-200  rounded-full pl-10 pr-4 w-full'
-        />
+        <Search />
       </div>
     </div>
   );

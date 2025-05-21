@@ -103,7 +103,7 @@ const SingerPostPage = (props: Props) => {
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               )}
-              <Link to={'/'}>{data.user.username}r</Link>
+              <Link to={'/'}>{data.user.username}</Link>
             </div>
             <p className='text-gray-500 text-sm py-2'>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit

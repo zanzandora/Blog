@@ -41,6 +41,11 @@ const router = createBrowserRouter([
         errorElement: <div>404 Not Found</div>,
       },
       {
+        path: '/post-list/:slug',
+        element: <SingerPostPage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
         path: '/register',
         element: <RegisterPage />,
         errorElement: <div>404 Not Found</div>,
