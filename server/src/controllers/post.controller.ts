@@ -15,9 +15,9 @@ export const getPosts = async (req: Request, res: Response) => {
   const author = req.query.author;
   const searchQuery = req.query.search;
   const sortQuery = req.query.sort;
-  const featured = req.query.featured;
+  const featured = req.query.feature;
 
-  if (cat) {
+  if (cat && cat !== 'general') {
     query.category = cat;
   }
 
@@ -43,11 +43,11 @@ export const getPosts = async (req: Request, res: Response) => {
       case 'oldest':
         sortObj = { createdAt: 1 };
         break;
-      case 'popular':
+      case 'most-popular':
         sortObj = { visit: -1 };
         break;
       case 'trending':
-        sortObj = { visit: 1 };
+        sortObj = { visit: -1 };
         (query as any).createdAt = {
           $gte: new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000),
         };
@@ -55,6 +55,10 @@ export const getPosts = async (req: Request, res: Response) => {
       default:
         break;
     }
+  }
+
+  if (featured) {
+    query.isFeature = true;
   }
 
   const posts = await postModal

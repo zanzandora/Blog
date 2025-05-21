@@ -17,6 +17,15 @@ const SideMenu = (props: Props) => {
     }
   };
 
+  const handleCatChanged = (value: string) => {
+    if (searchParams.get('cat') !== value) {
+      const params = Object.fromEntries(searchParams.entries());
+      delete params.search;
+      params.cat = value;
+      setSearchParams(params);
+    }
+  };
+
   return (
     <div className='px-4 h-max  sticky top-0 hidden lg:block'>
       <h1 className=' mb-4 text-sm font-medium'>Search</h1>
@@ -58,24 +67,42 @@ const SideMenu = (props: Props) => {
 
       <h1 className=' mt-8 mb-4 text-sm font-medium'>Categories</h1>
       <div className='flex flex-col gap-2 text-sm'>
-        <Link to={'/'} className='underline text-gray-500'>
+        <span
+          className='underline text-gray-500 cursor-pointer'
+          onClick={() => handleCatChanged('general')}
+        >
           All
-        </Link>
-        <Link to={'/'} className='underline text-gray-500'>
+        </span>
+        <span
+          className='underline text-gray-500 cursor-pointer'
+          onClick={() => handleCatChanged('web-design')}
+        >
           Web designer
-        </Link>
-        <Link to={'/'} className='underline text-gray-500'>
+        </span>
+        <span
+          className='underline text-gray-500 cursor-pointer'
+          onClick={() => handleCatChanged('development')}
+        >
           Development
-        </Link>
-        <Link to={'/'} className='underline text-gray-500'>
+        </span>
+        <span
+          className='underline text-gray-500 cursor-pointer'
+          onClick={() => handleCatChanged('database')}
+        >
           Database
-        </Link>
-        <Link to={'/'} className='underline text-gray-500'>
+        </span>
+        <span
+          className='underline text-gray-500 cursor-pointer'
+          onClick={() => handleCatChanged('deep-learning')}
+        >
           Deep learning
-        </Link>
-        <Link to={'/'} className='underline text-gray-500'>
+        </span>
+        <span
+          className='underline text-gray-500 cursor-pointer'
+          onClick={() => handleCatChanged('side-story')}
+        >
           Side story
-        </Link>
+        </span>
       </div>
     </div>
   );
