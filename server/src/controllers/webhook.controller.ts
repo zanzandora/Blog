@@ -61,8 +61,9 @@ export const clerkWebhook = async (req: any, res: any) => {
       });
     } catch (error: any) {
       if (error.code === 11000) {
-        // MongoDB duplicate key error
-        res.status(409).json({ message: 'Duplicate username detected' });
+        res
+          .status(200)
+          .json({ message: 'Duplicate username detected, but ignored.' });
       } else {
         res.status(500).json({ message: 'Internal server error' });
       }
