@@ -6,24 +6,16 @@ import axios from 'axios';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from './ui/toast';
+import type { Comment as CommentType } from '@/types';
 
-type commentProps = {
-  user: {
-    username: string;
-    img: string;
-  };
-  desc: string;
-  createdAt: Date | string;
-};
-
-const fetchComments = async (postId: any): Promise<commentProps[]> => {
+const fetchComments = async (postId: string): Promise<CommentType[]> => {
   const { data } = await axios.get(
     `${import.meta.env.VITE_API_URL}/comments/${postId}`
   );
   return data;
 };
 
-const Comments = ({ postId }: { postId: any }) => {
+const Comments = ({ postId }: { postId: string }) => {
   const { user } = useUser();
   const { getToken } = useAuth();
   const { toast } = useToast();
@@ -63,7 +55,7 @@ const Comments = ({ postId }: { postId: any }) => {
     },
   });
 
-  const handerSubmit = (e: any) => {
+  const handerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newComment = {
@@ -121,7 +113,7 @@ const Comments = ({ postId }: { postId: any }) => {
               }}
             />
           )}
-          {data.map((comment: any) => (
+          {data.map((comment: CommentType) => (
             <Comment key={comment._id} comment={comment} postId={postId} />
           ))}
         </>

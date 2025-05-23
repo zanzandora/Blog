@@ -1,11 +1,9 @@
-import { Link, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 import Search from './Search';
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
-type Props = {};
-
-const SideMenu = (props: Props) => {
+const SideMenu = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleFilterChanged = (value: string) => {

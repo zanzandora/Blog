@@ -9,7 +9,7 @@ type Props = {
   posts: Post[];
 };
 
-const FeturedPosts = (props: Props) => {
+const FeturedPosts = () => {
   const { isPending, isError, data, error } = useQuery({
     queryKey: ['post'],
     queryFn: async (): Promise<Props> => {

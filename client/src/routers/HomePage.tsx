@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,9 +11,7 @@ import Category from '@/components/Category';
 import FeturedPosts from '@/components/FeturedPosts';
 import PostList from '@/components/PostList';
 
-type Props = {};
-
-const HomePage = (props: Props) => {
+const HomePage = () => {
   return (
     <div className='mt-4 flex flex-col gap-4 lg:mx-1 mx-4'>
       {/* BREADCRUMBS */}

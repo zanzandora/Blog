@@ -1,9 +1,6 @@
 import { SignUp } from '@clerk/clerk-react';
-import React from 'react';
 
-type Props = {};
-
-const RegisterPage = (props: Props) => {
+const RegisterPage = () => {
   return (
     <div className='flex h-screen items-center justify-center '>
       <SignUp signInUrl='/login' />

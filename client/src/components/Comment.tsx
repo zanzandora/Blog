@@ -7,19 +7,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from './ui/toast';
-import { Post } from '@/types';
+import type { Post, Comment } from '@/types';
 
-type commentProps = {
-  _id?: string;
-  user: {
-    username: string;
-    img: string;
-  };
-  desc: string;
-  createdAt: Date | string;
-};
 type Props = {
-  comment: commentProps;
+  comment: Comment;
   postId?: Post['_id'];
 };
 

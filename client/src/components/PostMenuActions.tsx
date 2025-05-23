@@ -17,12 +17,7 @@ const PostMenuActions = ({ post }: Props) => {
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const {
-    isPending,
-    isError,
-    data: savedPosts,
-    error,
-  } = useQuery({
+  const { data: savedPosts } = useQuery({
     queryKey: ['savePosts'],
     queryFn: async () => {
       const token = await getToken();

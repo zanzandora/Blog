@@ -1,9 +1,7 @@
 import PostList from '@/components/PostList';
 import SideMenu from '@/components/SideMenu';
 
-type Props = {};
-
-const PostListPage = (props: Props) => {
+const PostListPage = () => {
   return (
     <div>
       <h1 className='mb-8 text-2xl'>Development Blog</h1>

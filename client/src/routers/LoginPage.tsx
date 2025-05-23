@@ -1,9 +1,6 @@
 import { SignIn } from '@clerk/clerk-react';
-import React from 'react';
 
-type Props = {};
-
-const LoginPage = (props: Props) => {
+const LoginPage = () => {
   return (
     <div className='flex h-[calc(100vh-80px)] items-center justify-center '>
       <SignIn signUpUrl='/register' />

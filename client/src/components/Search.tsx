@@ -2,9 +2,7 @@ import { SearchIcon } from 'lucide-react';
 import { Input } from './ui/input';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 
-type Props = {};
-
-const Search = (props: Props) => {
+const Search = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();

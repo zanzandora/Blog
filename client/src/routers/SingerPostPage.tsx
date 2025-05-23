@@ -9,21 +9,7 @@ import { Link, useParams } from 'react-router';
 import DOMPurify from 'dompurify';
 import { useEffect } from 'react';
 import { timePassed } from '@/utils/timePassed';
-
-type Post = {
-  _id: any;
-  title: string;
-  desc: string;
-  content: string;
-  user: {
-    username: string;
-    img: string;
-  };
-  category: string;
-  createdAt: Date | string;
-  img: string;
-  slug: string;
-};
+import type { Post } from '@/types';
 
 const fetchPost = async (slug: string): Promise<Post> => {
   // Thay đổi endpoint phù hợp với backend của bạn
@@ -33,7 +19,7 @@ const fetchPost = async (slug: string): Promise<Post> => {
   return data;
 };
 
-const SingerPostPage = (props: Props) => {
+const SingerPostPage = () => {
   const { slug } = useParams<{ slug: string }>();
 
   const { isPending, isError, data, error } = useQuery({
@@ -143,7 +129,7 @@ const SingerPostPage = (props: Props) => {
           <Search />
         </div>
       </div>
-      <Comments postId={data._id} />
+      <Comments postId={data._id!} />
     </div>
   );
 };

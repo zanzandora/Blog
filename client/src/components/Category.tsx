@@ -2,9 +2,7 @@ import { Separator } from '@/components/ui/separator';
 import { Link } from 'react-router';
 import Search from './Search';
 
-type Props = {};
-
-const Category = (props: Props) => {
+const Category = () => {
   return (
     <div className='hidden md:flex bg-gray-50 rounded-3xl xl:rounded-full gap-8  py-4 px-8  flex-wrap shadow-lg  items-center justify-between text-sm  '>
       <div className='flex-1 items-center justify-between  flex '>
