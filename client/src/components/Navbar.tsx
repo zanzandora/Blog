@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -14,6 +14,17 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 export default function Navbar() {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   const menuLinks = (
     <>
@@ -110,6 +121,7 @@ export default function Navbar() {
           </NavigationMenu>
         </div>
       )}
+
       {/* Hamburger Menu for Mobile */}
       {isMobile && (
         <div>
