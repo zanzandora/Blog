@@ -3,8 +3,10 @@ import axios from 'axios';
 import { useEffect, useCallback, useMemo } from 'react';
 import PostListItems from './PostListItems';
 import { useSearchParams } from 'react-router';
+import { useAuth } from '@clerk/clerk-react';
 
 const PostList = () => {
+  const { getToken } = useAuth();
   const [searchParams] = useSearchParams();
   const searchParamsObj = useMemo(() => {
     return Object.fromEntries(searchParams.entries());
@@ -21,8 +23,12 @@ const PostList = () => {
   } = useInfiniteQuery({
     queryKey: ['posts', searchParamsObj],
     queryFn: async ({ pageParam = 1 }) => {
+      const token = getToken();
       const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
         params: { page: pageParam, limit: 10, ...searchParamsObj },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       return res.data;
     },

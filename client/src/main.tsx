@@ -9,8 +9,9 @@ import SingerPostPage from './routers/SingerPostPage.tsx';
 import WritePage from './routers/WritePage.tsx';
 import MainLayout from './layout/MainLayout.tsx';
 import HomePage from './routers/HomePage.tsx';
-import { ClerkProvider } from '@clerk/clerk-react';
+import { ClerkLoading, ClerkProvider, ClerkLoaded } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Loader from './components/Loader.tsx';
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -66,8 +67,13 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <ClerkLoading>
+      <Loader />
+    </ClerkLoading>
+    <ClerkLoaded>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </ClerkLoaded>
   </ClerkProvider>
 );
