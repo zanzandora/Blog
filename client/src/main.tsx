@@ -12,6 +12,7 @@ import HomePage from './routers/HomePage.tsx';
 import { ClerkLoading, ClerkProvider, ClerkLoaded } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Loader from './components/Loader.tsx';
+import MySavePostPage from './routers/MySavePostPage.tsx';
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -37,8 +38,23 @@ const router = createBrowserRouter([
         errorElement: <div>404 Not Found</div>,
       },
       {
+        path: '/register',
+        element: <RegisterPage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
         path: '/post-list',
         element: <PostListPage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
+        path: '/write',
+        element: <WritePage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
+        path: '/my-save-post',
+        element: <MySavePostPage />,
         errorElement: <div>404 Not Found</div>,
       },
       {
@@ -47,18 +63,13 @@ const router = createBrowserRouter([
         errorElement: <div>404 Not Found</div>,
       },
       {
-        path: '/register',
-        element: <RegisterPage />,
+        path: '/my-save-post/:slug',
+        element: <SingerPostPage />,
         errorElement: <div>404 Not Found</div>,
       },
       {
         path: '/:slug',
         element: <SingerPostPage />,
-        errorElement: <div>404 Not Found</div>,
-      },
-      {
-        path: '/write',
-        element: <WritePage />,
         errorElement: <div>404 Not Found</div>,
       },
     ],

@@ -34,6 +34,7 @@ const WritePage = () => {
   const { isLoaded, isSignedIn } = useUser();
   const { getToken } = useAuth();
   const [progress, setProgress] = useState<number>(0);
+  const [desc, setDesc] = useState(0);
 
   const [cover, setCover] = useState<{
     url?: string;
@@ -102,6 +103,20 @@ const WritePage = () => {
     };
     console.log(newPost);
     mutation.mutate(newPost);
+  };
+
+  // Hàm chuyển HTML sang plain text
+  const getTextFromHtml = (html: string) => {
+    const div = document.createElement('div');
+    div.innerHTML = html;
+    return div.textContent || div.innerText || '';
+  };
+
+  // Khi nội dung thay đổi
+  const handleQuillChange = (content: string) => {
+    setValue(content);
+    const plainText = getTextFromHtml(content);
+    setDesc(plainText.length);
   };
 
   return (
@@ -185,6 +200,7 @@ const WritePage = () => {
           placeholder='A Short Description'
           className='bg-white '
         />
+
         <div>
           <div className='flex flex-1 '>
             <div className='flex flex-col gap-2 mr-2'>
@@ -210,8 +226,6 @@ const WritePage = () => {
                       { indent: '-1' },
                       { indent: '+1' },
                     ],
-                    ['link', 'image', 'video'],
-                    ['code-block'],
                     ['clean'],
                   ],
                 },
@@ -235,10 +249,13 @@ const WritePage = () => {
                 'video',
                 'code-block',
               ]}
-              onChange={setValue}
+              onChange={handleQuillChange}
               className=' rounded-md bg-white flex-1'
               readOnly={0 > progress && progress < 100}
             />
+          </div>
+          <div className='text-right text-sm text-gray-500 mt-1'>
+            {desc} ký tự
           </div>
         </div>
         <Button
