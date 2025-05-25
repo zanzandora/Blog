@@ -4,6 +4,7 @@ import { useEffect, useCallback, useMemo } from 'react';
 import PostListItems from './PostListItems';
 import { useSearchParams } from 'react-router';
 import { useAuth } from '@clerk/clerk-react';
+import Loader from './Loader';
 
 const PostList = () => {
   const { getToken } = useAuth();
@@ -64,7 +65,7 @@ const PostList = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  if (isFetching && allPosts.length === 0) return <div>Loading...</div>;
+  if (isFetching && allPosts.length === 0) return <Loader />;
   if (status === 'error') return <div>Error: {error.message}</div>;
 
   return (

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useAuth, useUser } from '@clerk/clerk-react';
 import { useInfiniteQuery } from '@tanstack/react-query';
 import PostListItems from '@/components/PostListItems';
-import { Loader } from 'lucide-react';
 import type { Post } from '@/types';
+import Loader from '@/components/Loader';
 
 const MySavePostPage = () => {
   const { getToken } = useAuth();
@@ -66,7 +66,7 @@ const MySavePostPage = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [handleScroll]);
 
-  if (isFetching && allPosts.length === 0) return <div>Loading...</div>;
+  if (isFetching && allPosts.length === 0) return <Loader />;
   if (status === 'error') return <div>Error: {error.message}</div>;
 
   if (!isLoaded) return <Loader />;

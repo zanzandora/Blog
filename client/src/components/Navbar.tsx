@@ -41,19 +41,6 @@ export default function Navbar() {
         </NavigationMenuLink>
       </NavigationMenuItem>
 
-      {/* Trending */}
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild className='text-black'>
-          <Link
-            to='/post-list?sort=trending'
-            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Trending
-          </Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-
       {/* Most Popular */}
       <NavigationMenuItem>
         <NavigationMenuLink asChild className='text-black'>
@@ -76,6 +63,19 @@ export default function Navbar() {
             onClick={() => setMobileMenuOpen(false)}
           >
             My Save Post
+          </Link>
+        </NavigationMenuLink>
+      </NavigationMenuItem>
+
+      {/* Contact */}
+      <NavigationMenuItem>
+        <NavigationMenuLink asChild className='text-black'>
+          <Link
+            to='/contact'
+            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Contact
           </Link>
         </NavigationMenuLink>
       </NavigationMenuItem>

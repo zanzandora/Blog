@@ -13,6 +13,7 @@ import { ClerkLoading, ClerkProvider, ClerkLoaded } from '@clerk/clerk-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Loader from './components/Loader.tsx';
 import MySavePostPage from './routers/MySavePostPage.tsx';
+import ContactPage from './routers/ContactPage.tsx';
 
 // Import your Publishable Key
 const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
@@ -55,6 +56,11 @@ const router = createBrowserRouter([
       {
         path: '/my-save-post',
         element: <MySavePostPage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
+        path: '/contact',
+        element: <ContactPage />,
         errorElement: <div>404 Not Found</div>,
       },
       {

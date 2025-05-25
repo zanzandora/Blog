@@ -10,6 +10,7 @@ import DOMPurify from 'dompurify';
 import { useEffect } from 'react';
 import { timePassed } from '@/utils/timePassed';
 import type { Post } from '@/types';
+import Loader from '@/components/Loader';
 
 const fetchPost = async (slug: string): Promise<Post> => {
   // Thay đổi endpoint phù hợp với backend của bạn
@@ -33,7 +34,7 @@ const SingerPostPage = () => {
   }, [slug]);
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (isError) {

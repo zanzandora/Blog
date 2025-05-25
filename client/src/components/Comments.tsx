@@ -7,6 +7,7 @@ import { useAuth, useUser } from '@clerk/clerk-react';
 import { useToast } from '@/hooks/use-toast';
 import { ToastAction } from './ui/toast';
 import type { Comment as CommentType } from '@/types';
+import Loader from './Loader';
 
 const fetchComments = async (postId: string): Promise<CommentType[]> => {
   const { data } = await axios.get(
@@ -65,7 +66,7 @@ const Comments = ({ postId }: { postId: string }) => {
   };
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (isError) {

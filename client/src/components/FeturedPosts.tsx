@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { Post } from '@/types';
 import axios from 'axios';
 import { timePassed } from '@/utils/timePassed';
+import Loader from './Loader';
 
 type Props = {
   posts: Post[];
@@ -21,7 +22,7 @@ const FeturedPosts = () => {
   });
 
   if (isPending) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (isError) {

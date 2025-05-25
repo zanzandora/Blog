@@ -4,7 +4,7 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "concurrently -n \"SERVER,NGROK\" -c \"bgBlue.bold,bgGreen.bold\" \"nodemon --watch src --ext ts --exec tsx src/index.ts\" \"npm run ngrok\"",
+    "dev": "concurrently -n \"SERVER,NGROK\" -c \"bgBlue.bold,bgGreen.bold\" \"cross-env NODE_ENV=development nodemon --watch src --ext ts --exec tsx src/index.ts\" \"npm run ngrok\"",
     "start": "tsx src/index.ts",
     "build": "tsc",
     "ngrok": "tsx  src/lib/scripts/start-ngrok.ts"
@@ -21,15 +21,18 @@
     "express": "^5.1.0",
     "imagekit": "^6.0.0",
     "mongoose": "^8.14.2",
+    "nodemailer": "^7.0.3",
     "svix": "^1.65.0"
   },
   "devDependencies": {
     "@types/cors": "^2.8.18",
     "@types/express": "^5.0.1",
     "@types/node": "^22.15.17",
+    "@types/nodemailer": "^6.4.17",
     "@typescript-eslint/eslint-plugin": "^8.32.1",
     "@typescript-eslint/parser": "^8.32.1",
     "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "eslint": "^9.26.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.31.0",
