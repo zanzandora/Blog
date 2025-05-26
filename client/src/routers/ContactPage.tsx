@@ -1,83 +1,25 @@
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
 import { Mail, Phone, MapPin } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useToast } from '@/hooks/use-toast';
-import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
-import { ToastAction } from '@radix-ui/react-toast';
-
-const contactSchema = z.object({
-  name: z.string().min(1, 'Name is required'),
-  email: z.string().email('Email không hợp lệ'),
-  message: z.string().min(10, 'Nội dung ít nhất 10 ký tự'),
-});
-
-type ContactFormValues = z.infer<typeof contactSchema>;
+import ContactForm from '@/components/ContactForm';
 
 const ContactPage = () => {
-  const { toast } = useToast();
-
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: {
-      email: '',
-      name: '',
-      message: '',
-    },
-  });
-
-  const mutation = useMutation({
-    mutationFn: async (data: ContactFormValues) => {
-      // Gửi trực tiếp object, axios sẽ tự stringify
-      return await axios.post(`${import.meta.env.VITE_API_URL}/contact`, data);
-    },
-    onSuccess: () => {
-      toast({
-        title: 'Send success',
-        description: 'I will respond as soon as possible !',
-      });
-      reset();
-    },
-    onError: () => {
-      toast({
-        title: 'Send Failed',
-        description: 'There was a problem sending the email.',
-        action: <ToastAction altText='Try Again'>Try Again</ToastAction>,
-        variant: 'destructive',
-      });
-    },
-  });
-
-  // Xử lý submit qua react-hook-form
-  const onSubmit = (data: ContactFormValues) => {
-    mutation.mutate(data);
-  };
-
   return (
-    <div>
-      <h1 className='text-5xl text-center my-4 w-full '>Get In Touch</h1>
+    <div className='mb-12'>
+      <h1 className='text-5xl text-center my-4 w-full text-gray-800 '>
+        Get In Touch
+      </h1>
       <div className='max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8'>
         {/* Contact Info */}
-        <div className='space-y-6'>
+        <div className='space-y-6 lg:order-1 order-2'>
           <Card>
             <CardHeader>
-              <CardTitle>Thông tin liên hệ</CardTitle>
+              <CardTitle>My Contact</CardTitle>
             </CardHeader>
             <CardContent className='space-y-4 text-gray-700'>
               <div className='flex items-center gap-3'>
                 <MapPin className='text-primary' />
-                <span>123 Đường ABC, Quận 1, TP.HCM</span>
+                <span>123 Đường ABC, Quận 1, TP.HN</span>
               </div>
               <div className='flex items-center gap-3'>
                 <Mail className='text-primary' />
@@ -92,70 +34,29 @@ const ContactPage = () => {
 
           {/* Google Map Placeholder */}
           <div className='aspect-video w-full bg-gray-200 rounded-xl flex items-center justify-center text-gray-500 text-sm'>
-            Google Map (tùy chọn)
+            <iframe
+              src='https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.1310713556204!2d105.89622067471436!3d21.027440887824902!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135a96a85453f37%3A0x39ce34aaf20a939!2sAeon%20Mall%20Long%20Bi%C3%AAn!5e0!3m2!1svi!2s!4v1748197718611!5m2!1svi!2s'
+              style={{
+                border: 0,
+                width: '100%',
+                height: '100%',
+                borderRadius: '12px',
+              }}
+              allowFullScreen={false}
+              loading='lazy'
+              referrerPolicy='no-referrer-when-downgrade'
+            ></iframe>
           </div>
         </div>
 
         {/* Contact Form */}
-        <Card className='shadow-lg'>
+        <Card className='shadow-lg order-1 lg:order-2'>
           <CardHeader>
-            <CardTitle>Gửi tin nhắn</CardTitle>
+            <CardTitle>Send Your Words !</CardTitle>
           </CardHeader>
           <CardContent>
-            <form
-              className='flex flex-col gap-4'
-              onSubmit={handleSubmit(onSubmit)}
-              noValidate
-            >
-              <div>
-                <Input
-                  placeholder='Name'
-                  type='text'
-                  {...register('name')}
-                  disabled={isSubmitting}
-                  autoComplete='name'
-                />
-                {errors.name && (
-                  <p className='text-red-500 text-xs mt-1'>
-                    {errors.name.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Input
-                  placeholder='Email'
-                  type='email'
-                  {...register('email')}
-                  disabled={isSubmitting}
-                  autoComplete='email'
-                />
-                {errors.email && (
-                  <p className='text-red-500 text-xs mt-1'>
-                    {errors.email.message}
-                  </p>
-                )}
-              </div>
-              <div>
-                <Textarea
-                  placeholder='Nội dung tin nhắn...'
-                  rows={6}
-                  {...register('message')}
-                  disabled={isSubmitting}
-                />
-                {errors.message && (
-                  <p className='text-red-500 text-xs mt-1'>
-                    {errors.message.message}
-                  </p>
-                )}
-              </div>
-              <Button
-                type='submit'
-                className='w-full'
-                disabled={isSubmitting || mutation.isPending}
-              >
-                {mutation.isPending ? 'Đang gửi...' : 'Gửi liên hệ'}
-              </Button>
-            </form>
+            {/* Contact Form */}
+            <ContactForm />
 
             {/* Social icon */}
             <div className='flex items-center gap-4 my-6  justify-center '>
