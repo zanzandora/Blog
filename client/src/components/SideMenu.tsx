@@ -3,7 +3,7 @@ import Search from './Search';
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
-const SideMenu = () => {
+const SideMenu = ({ onAction }: any) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleFilterChanged = (value: string) => {
@@ -13,6 +13,7 @@ const SideMenu = () => {
         sort: value,
       });
     }
+    if (onAction) onAction();
   };
 
   const handleCatChanged = (value: string) => {
@@ -22,17 +23,18 @@ const SideMenu = () => {
       params.cat = value;
       setSearchParams(params);
     }
+    if (onAction) onAction();
   };
 
   return (
-    <div className='px-4 h-max  sticky top-0 hidden lg:block'>
+    <div className='px-4 h-max  sticky top-0 '>
       <h1 className=' mb-4 text-sm font-medium'>Search</h1>
       <Search />
 
       <h1 className='mt-8 mb-4 text-sm font-medium'>Filter</h1>
       <div className='flex flex-col  gap-2 text-sm'>
         <RadioGroup
-          defaultValue='newest'
+          defaultValue={searchParams.get('sort') || 'newest'}
           name='sort'
           onValueChange={handleFilterChanged}
         >
