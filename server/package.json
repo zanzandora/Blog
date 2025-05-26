@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -n \"SERVER,NGROK\" -c \"bgBlue.bold,bgGreen.bold\" \"cross-env NODE_ENV=development nodemon --watch src --ext ts --exec tsx src/index.ts\" \"npm run ngrok\"",
-    "start": "tsx src/index.ts",
+    "start": "node dist/index.js",
     "build": "tsc",
     "ngrok": "tsx  src/lib/scripts/start-ngrok.ts"
   },
