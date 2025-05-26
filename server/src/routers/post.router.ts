@@ -12,11 +12,17 @@ import { Router } from 'express';
 
 const expressRouter = Router();
 
-expressRouter.get('/', getPosts);
+function asyncHandler(fn: any) {
+  return function (req: any, res: any, next: any) {
+    Promise.resolve(fn(req, res, next)).catch(next);
+  };
+}
+
+expressRouter.get('/', asyncHandler(getPosts));
 expressRouter.get('/upload-auth', uploadAuth);
-expressRouter.get('/:slug', increaseVisit, getPost);
-expressRouter.patch('/feature', featurePost);
-expressRouter.post('/', requireAuth(), createPost);
-expressRouter.delete('/:id', requireAuth(), deletePost);
+expressRouter.get('/:slug', increaseVisit, asyncHandler(getPost));
+expressRouter.patch('/feature', asyncHandler(featurePost));
+expressRouter.post('/', requireAuth(), asyncHandler(createPost));
+expressRouter.delete('/:id', requireAuth(), asyncHandler(deletePost));
 
 export default expressRouter;

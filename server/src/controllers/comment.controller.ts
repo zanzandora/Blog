@@ -57,7 +57,9 @@ export const deleteComment = async (
       return res.status(401).json({ error: 'Not authenticated' });
     }
 
-    const role = req.auth.sessionClaims?.metadata?.role || 'user';
+    type SessionClaims = { metadata?: { role?: string } };
+    const sessionClaims = req.auth.sessionClaims as SessionClaims | undefined;
+    const role = sessionClaims?.metadata?.role || 'user';
 
     if (role === 'admin') {
       await commentModel.findOneAndDelete({

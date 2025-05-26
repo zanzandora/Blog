@@ -10,6 +10,8 @@ const increaseVisit = async (
 
   await postModel.findOneAndUpdate({ slug }, { $inc: { visit: 1 } });
 
+  res.json({ message: 'Visit count increased' });
+
   next();
 };
 

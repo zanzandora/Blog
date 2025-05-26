@@ -10,6 +10,8 @@ const expressRouter = Router();
 
 expressRouter.get('/:postId', getComment);
 expressRouter.post('/:postId', requireAuth(), createComment);
-expressRouter.delete('/:id', requireAuth(), deleteComment);
+expressRouter.delete('/:id', requireAuth(), (req, res, next) => {
+  Promise.resolve(deleteComment(req, res, next)).catch(next);
+});
 
 export default expressRouter;

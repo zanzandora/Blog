@@ -74,7 +74,7 @@ export const getPosts = async (req: Request, res: Response) => {
   res.status(200).json({ posts, hasMore, page });
 };
 
-export const uploadAuth = async (req: Request, res: Response) => {
+export const uploadAuth = async (res: Response) => {
   const imagekit = new ImageKit({
     urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
     publicKey: process.env.IMAGEKIT_PUBLIC_KEY!,
@@ -104,7 +104,9 @@ export const featurePost = async (
     if (!clerkUserId) {
       return res.status(401).json({ error: 'Not authenticated' });
     }
-    const role = req.auth.sessionClaims?.metadata?.role || 'user';
+    type SessionClaims = { metadata?: { role?: string } };
+    const sessionClaims = req.auth.sessionClaims as SessionClaims | undefined;
+    const role = sessionClaims?.metadata?.role || 'user';
 
     if (role !== 'admin') {
       return res.status(403).json({ message: 'You cannot feature posts !' });
@@ -188,7 +190,9 @@ export const deletePost = async (
     if (!clerkUserId) {
       return res.status(401).json({ error: 'Not authenticated' });
     }
-    const role = req.auth.sessionClaims?.metadata?.role || 'user';
+    type SessionClaims = { metadata?: { role?: string } };
+    const sessionClaims = req.auth.sessionClaims as SessionClaims | undefined;
+    const role = sessionClaims?.metadata?.role || 'user';
 
     if (role === 'admin') {
       await postModal.findOneAndDelete({
