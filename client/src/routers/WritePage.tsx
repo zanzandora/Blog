@@ -41,8 +41,16 @@ const WritePage = () => {
     name?: string;
     filePath?: string;
   } | null>(null);
-  const [img, setImg] = useState('');
-  const [video, setVideo] = useState('');
+  const [img, setImg] = useState<{
+    url?: string;
+    name?: string;
+    filePath?: string;
+  } | null>(null);
+  const [video, setVideo] = useState<{
+    url?: string;
+    name?: string;
+    filePath?: string;
+  } | null>(null);
 
   const [value, setValue] = useState('');
   const { toast } = useToast();
@@ -50,11 +58,11 @@ const WritePage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (img) setValue((prev) => prev + `<p><image src="${img.url}"/></p>`);
+    if (img?.url) setValue((prev) => prev + `<p><image src="${img.url}"/></p>`);
   }, [img]);
 
   useEffect(() => {
-    if (video)
+    if (video?.url)
       setValue(
         (prev) => prev + `<p><iframe class="ql-video" src="${video.url}"/></p>`
       );

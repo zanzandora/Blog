@@ -11,6 +11,7 @@ import webhookRouter from './routers/webhook.router';
 import { createServer } from 'node:http';
 import path from 'node:path';
 import connectDB from './lib/connectDB';
+import { fileURLToPath } from 'node:url';
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
@@ -39,8 +40,10 @@ const PORT = process.env.PORT || 3000;
 //   next();
 // });
 
-const clientDist = path.resolve('./dist/client');
-app.use(express.static(clientDist));
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const clientDist = path.resolve(__dirname, '../../dist/client');
+console.log(clientDist);
 
 app.use('/comments', commentRouter);
 app.use('/posts', postRouter);
@@ -65,6 +68,10 @@ app.use(
   }
 );
 
+app.use(express.static(clientDist));
+app.get(/(.*)/, (_, res) => {
+  res.sendFile(path.join(clientDist, 'index.html'));
+});
 httpServer.listen(PORT, () => {
   connectDB();
   console.log(`Example app listening on port  http://localhost:${PORT}`);

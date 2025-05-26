@@ -1,0 +1,10 @@
+{
+  "name": "fullstack-app",
+  "version": "1.0.0",
+  "description": "A fullstack application with React frontend and Node.js backend",
+  "main": "server/dist/index.js",
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ../server && npm install && tsc",
+    "start": "node server/dist/index.js"
+  }
+}
