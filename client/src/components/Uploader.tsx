@@ -21,7 +21,6 @@ const Uploader = ({
   const toastShownRef = useRef(false);
   const ref = useRef<HTMLInputElement>(null);
   const { toast, dismiss } = useToast();
-  console.log(progress);
 
   const authenticator = async () => {
     try {

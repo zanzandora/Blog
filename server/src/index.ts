@@ -43,7 +43,6 @@ const PORT = process.env.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const clientDist = path.resolve(__dirname, '../../dist/client');
-console.log(clientDist);
 
 app.use('/comments', commentRouter);
 app.use('/posts', postRouter);
@@ -51,8 +50,6 @@ app.use('/users', userRouter);
 app.use('/contact', contactRouter);
 
 app.use((err: any, res: express.Response) => {
-  console.error('Lỗi server:', err.message);
-
   res.status(err.status || 500);
   res.json({
     message: err.message || 'Something went wrong',

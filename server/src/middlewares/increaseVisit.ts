@@ -3,14 +3,12 @@ import { Request, Response, NextFunction } from 'express';
 
 const increaseVisit = async (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
   const slug = req.params.slug;
 
   await postModel.findOneAndUpdate({ slug }, { $inc: { visit: 1 } });
-
-  res.json({ message: 'Visit count increased' });
 
   next();
 };

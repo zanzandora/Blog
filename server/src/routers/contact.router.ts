@@ -1,10 +1,13 @@
 import { getContact } from '@/controllers/contact.controller';
-import { Router } from 'express';
+import { Router, Request, Response, NextFunction } from 'express';
 
 const expressRouter = Router();
 
-function asyncHandler(fn: any) {
-  return function (req: any, res: any, next: any) {
+// Định nghĩa asyncHandler để wrap các controller async
+function asyncHandler(
+  fn: (req: Request, res: Response, next: NextFunction) => Promise<any>
+) {
+  return (req: Request, res: Response, next: NextFunction) => {
     Promise.resolve(fn(req, res, next)).catch(next);
   };
 }

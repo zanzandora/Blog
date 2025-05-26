@@ -44,6 +44,7 @@ const SingerPostPage = () => {
   if (!data) {
     return <span>Post not found</span>;
   }
+  console.log(data);
 
   return (
     <div className='flex flex-col gap-8 lg:mx-1  mt-4'>
