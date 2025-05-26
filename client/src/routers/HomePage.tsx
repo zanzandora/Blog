@@ -23,8 +23,7 @@ const HomePage = () => {
             viewBox='0 0 200 200'
             width='180'
             height='180'
-            // className='text-lg tracking-widest animate-spin super-slow-spin'
-            className='text-lg tracking-widest'
+            className='text-lg tracking-widest animate-spin super-slow-spin'
           >
             <path
               id='circlePath'
