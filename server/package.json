@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -n \"SERVER,NGROK\" -c \"bgBlue.bold,bgGreen.bold\" \"cross-env NODE_ENV=development nodemon --watch src --ext ts --exec tsx src/index.ts\" \"npm run ngrok\"",
-    "start": "node dist/index.js",
-    "build": "tsc",
+    "start": "node dist/server.js",
+    "build": "vite build",
+    "test:import": "node dist/test.js",
     "ngrok": "tsx  src/lib/scripts/start-ngrok.ts"
   },
   "keywords": [],
@@ -41,6 +42,8 @@
     "ngrok": "^5.0.0-beta.2",
     "nodemon": "^3.1.10",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-tsconfig-paths": "^5.1.4"
   }
 }

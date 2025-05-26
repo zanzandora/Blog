@@ -8,10 +8,10 @@ import postRouter from './routers/post.router';
 import userRouter from './routers/user.router';
 import contactRouter from './routers/contact.router';
 import webhookRouter from './routers/webhook.router';
-import { createServer } from 'node:http';
-import path from 'node:path';
+import { createServer } from 'http';
+import path from 'path';
 import connectDB from './lib/connectDB';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath } from 'url';
 
 const corsOptions = {
   origin: process.env.CLIENT_URL,
