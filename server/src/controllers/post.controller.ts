@@ -9,7 +9,7 @@ export const getPosts = async (req: Request, res: Response) => {
   const page = parseInt((req.query.page as string) || '1');
   const limit = parseInt((req.query.limit as string) || '2');
 
-  const query = {};
+  const query: Record<string, any> = {};
 
   const cat = req.query.cat;
   const author = req.query.author;

@@ -50,23 +50,16 @@ app.use('/posts', postRouter);
 app.use('/users', userRouter);
 app.use('/contact', contactRouter);
 
-app.use(
-  (
-    err: any,
-    req: express.Request,
-    res: express.Response,
-    next: express.NextFunction
-  ) => {
-    console.error('Lỗi server:', err.message);
+app.use((err: any, res: express.Response) => {
+  console.error('Lỗi server:', err.message);
 
-    res.status(err.status || 500);
-    res.json({
-      message: err.message || 'Something went wrong',
-      status: err.status,
-      stack: err.stack,
-    });
-  }
-);
+  res.status(err.status || 500);
+  res.json({
+    message: err.message || 'Something went wrong',
+    status: err.status,
+    stack: err.stack,
+  });
+});
 
 app.use(express.static(clientDist));
 app.get(/(.*)/, (_, res) => {
