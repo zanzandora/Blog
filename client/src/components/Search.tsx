@@ -7,9 +7,9 @@ const Search = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleKeyPress = (e: any) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      const query = e.target.value;
+      const query = e.currentTarget.value;
       if (location.pathname === '/post-list') {
         setSearchParams({ ...Object.fromEntries(searchParams), search: query });
       } else {
@@ -17,6 +17,7 @@ const Search = () => {
       }
     }
   };
+
   return (
     <div className='bg-gray-100  rounded-full flex items-center  relative'>
       <span className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>

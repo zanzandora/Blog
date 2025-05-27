@@ -1,13 +1,14 @@
 import { useState, ReactNode, useRef } from 'react';
 import { IKContext, IKUpload } from 'imagekitio-react';
 import { useToast } from '@/hooks/use-toast';
+import { CommonError, MediaFile } from '@/types';
 
 interface UploaderProps {
   type: string;
-  onError?: (err: any) => void;
+  onError?: (err: CommonError) => void;
   onProgress?: (percent: number) => void;
   children?: ReactNode;
-  setData: any;
+  setData: (data: MediaFile) => void;
 }
 
 const Uploader = ({
@@ -17,7 +18,7 @@ const Uploader = ({
   type,
   setData,
 }: UploaderProps) => {
-  const [progress, setProgress] = useState<number>(0);
+  const [, setProgress] = useState<number>(0);
   const toastShownRef = useRef(false);
   const ref = useRef<HTMLInputElement>(null);
   const { toast, dismiss } = useToast();
@@ -78,7 +79,7 @@ const Uploader = ({
   };
 
   // Handler for upload success
-  const handleSuccess = (res: any) => {
+  const handleSuccess = (res: MediaFile) => {
     setProgress(100);
     onProgress?.(100);
     // Dismiss uploading toast if still showing
@@ -94,7 +95,7 @@ const Uploader = ({
   };
 
   // Handler for upload error
-  const handleError = (err: any) => {
+  const handleError = (err: CommonError) => {
     setProgress(0);
     onProgress?.(0);
     dismiss('uploading-toast');

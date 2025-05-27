@@ -3,7 +3,11 @@ import Search from './Search';
 import { Label } from './ui/label';
 import { RadioGroup, RadioGroupItem } from './ui/radio-group';
 
-const SideMenu = ({ onAction }: any) => {
+interface SideMenuProps {
+  onAction?: () => void;
+}
+
+const SideMenu = ({ onAction }: SideMenuProps) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const handleFilterChanged = (value: string) => {

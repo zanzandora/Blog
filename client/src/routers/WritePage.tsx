@@ -21,6 +21,7 @@ import { ToastAction } from '@/components/ui/toast';
 import { useNavigate } from 'react-router-dom';
 import Uploader from '@/components/Uploader';
 import Loader from '@/components/Loader';
+import { MediaFile } from '@/types';
 
 type NewPost = {
   img: string;
@@ -36,21 +37,9 @@ const WritePage = () => {
   const [progress, setProgress] = useState<number>(0);
   const [desc, setDesc] = useState(0);
 
-  const [cover, setCover] = useState<{
-    url?: string;
-    name?: string;
-    filePath?: string;
-  } | null>(null);
-  const [img, setImg] = useState<{
-    url?: string;
-    name?: string;
-    filePath?: string;
-  } | null>(null);
-  const [video, setVideo] = useState<{
-    url?: string;
-    name?: string;
-    filePath?: string;
-  } | null>(null);
+  const [cover, setCover] = useState<MediaFile | null>(null);
+  const [img, setImg] = useState<MediaFile | null>(null);
+  const [video, setVideo] = useState<MediaFile | null>(null);
 
   const [value, setValue] = useState('');
   const { toast } = useToast();
@@ -78,7 +67,7 @@ const WritePage = () => {
       });
     },
 
-    onSuccess: (res: any) => {
+    onSuccess: (res) => {
       toast({
         className: 'bg-green-500 text-white',
         title: 'Post created successfully',
@@ -99,7 +88,7 @@ const WritePage = () => {
   if (!isLoaded) return <Loader />;
   if (!isLoaded && !isSignedIn) return <div>You should log in first</div>;
 
-  const handerSubmit = (e: any) => {
+  const handerSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const newPost = {
@@ -143,6 +132,13 @@ const WritePage = () => {
             if (percent === 100 || percent === 0) {
               setTimeout(() => setProgress(0), 1000);
             }
+          }}
+          onError={(err) => {
+            toast({
+              className: 'bg-red-500 text-white',
+              title: 'Upload failed',
+              description: err?.message || 'An error occurred during upload.',
+            });
           }}
         >
           <div className='flex items-center gap-3'>
