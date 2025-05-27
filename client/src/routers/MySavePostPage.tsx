@@ -5,6 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import PostListItems from '@/components/PostListItems';
 import type { Post } from '@/types';
 import Loader from '@/components/Loader';
+import Error from '@/components/Error';
 
 const MySavePostPage = () => {
   const { getToken } = useAuth();
@@ -67,7 +68,7 @@ const MySavePostPage = () => {
   }, [handleScroll]);
 
   if (isFetching && allPosts.length === 0) return <Loader />;
-  if (status === 'error') return <div>Error: {error.message}</div>;
+  if (status === 'error') return <Error message={error.message} />;
 
   if (!isLoaded) return <Loader />;
   if (!isLoaded && !isSignedIn) return <div>You should log in first</div>;
