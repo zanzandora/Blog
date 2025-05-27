@@ -55,8 +55,8 @@ export default function Navbar() {
       </NavigationMenuItem>
 
       {/* About */}
-      <NavigationMenuItem>
-        <SignedIn>
+      <SignedIn>
+        <NavigationMenuItem>
           <NavigationMenuLink asChild className='text-black'>
             <Link
               to='/my-save-post'
@@ -66,8 +66,8 @@ export default function Navbar() {
               My Save Post
             </Link>
           </NavigationMenuLink>
-        </SignedIn>
-      </NavigationMenuItem>
+        </NavigationMenuItem>
+      </SignedIn>
 
       {/* Contact */}
       <NavigationMenuItem>
