@@ -56,15 +56,17 @@ export default function Navbar() {
 
       {/* About */}
       <NavigationMenuItem>
-        <NavigationMenuLink asChild className='text-black'>
-          <Link
-            to='/my-save-post'
-            className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            My Save Post
-          </Link>
-        </NavigationMenuLink>
+        <SignedIn>
+          <NavigationMenuLink asChild className='text-black'>
+            <Link
+              to='/my-save-post'
+              className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              My Save Post
+            </Link>
+          </NavigationMenuLink>
+        </SignedIn>
       </NavigationMenuItem>
 
       {/* Contact */}
