@@ -141,8 +141,6 @@ export const createPost = async (
 ) => {
   try {
     const clerkUserId = req.auth?.userId;
-    console.log('Headers:', req.headers);
-    console.log('clerkUserId:', clerkUserId);
 
     if (!clerkUserId) {
       res.status(401).json({ message: 'Not authenticated' });

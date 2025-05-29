@@ -38,7 +38,6 @@ const MySavePostPage = () => {
     getNextPageParam: (lastPage, pages) =>
       lastPage.hasMore ? pages.length + 1 : undefined,
   });
-  console.log(data);
 
   // Lấy tất cả bài viết
   const allPosts = data?.pages?.flatMap((page) => page.posts) || [];

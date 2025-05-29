@@ -17,8 +17,6 @@ export const createComment = async (
 ) => {
   try {
     const clerkUserId = req.auth?.userId;
-    // console.log('Headers:', req.headers);
-    // console.log('clerkUserId:', clerkUserId);
 
     if (!clerkUserId) {
       res.status(401).json({ message: 'Not authenticated' });
@@ -51,7 +49,6 @@ export const deleteComment = async (
 ) => {
   try {
     const clerkUserId = req.auth?.userId;
-    // console.log('Headers:', req.headers.authorization);
 
     if (!clerkUserId) {
       return res.status(401).json({ error: 'Not authenticated' });

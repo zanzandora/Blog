@@ -39,7 +39,6 @@ const Uploader = ({
 
       // Parse and destructure the response JSON for upload credentials.
       const data = await response.json();
-      console.log('Upload auth response:', data);
       const { signature, expire, token } = data;
       return { signature, expire, token };
     } catch (error) {
