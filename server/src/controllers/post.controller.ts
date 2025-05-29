@@ -88,7 +88,7 @@ export const uploadAuth = async (_req: Request, res: Response) => {
 export const getPost = async (req: Request, res: Response) => {
   const post = await postModal
     .findOne({ slug: req.params.slug })
-    .populate('user', 'username img');
+    .populate('user', 'username img clerkUserId');
   res.status(200).json(post);
 };
 
@@ -174,6 +174,69 @@ export const createPost = async (
     const post = new postModal({ user: user._id, slug, ...req.body });
     await post.save();
     res.status(201).json(post);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updatePost = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const clerkUserId = req.auth?.userId;
+    const postId = req.params.id;
+
+    if (!clerkUserId) {
+      return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    const user = await userModel.findOne({ clerkUserId });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const post = await postModal.findById(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    // Kiểm tra quyền sở hữu
+    if (post.user.toString() !== user._id.toString()) {
+      return res
+        .status(403)
+        .json({ message: 'You are not the owner of this post' });
+    }
+
+    // Tạo slug mới nếu title thay đổi
+    if (req.body.title && req.body.title !== post.title) {
+      let newSlug = req.body.title
+        .toString()
+        .toLowerCase()
+        .trim()
+        .replace(/[\s\W-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+
+      let counter = 1;
+      let uniqueSlug = newSlug;
+
+      // Kiểm tra slug không trùng lặp
+      while (
+        await postModal.findOne({ slug: uniqueSlug, _id: { $ne: postId } })
+      ) {
+        uniqueSlug = `${newSlug}-${counter}`;
+        counter++;
+      }
+
+      req.body.slug = uniqueSlug;
+    }
+
+    // Cập nhật post với dữ liệu mới
+    Object.assign(post, req.body);
+    await post.save();
+
+    return res.status(200).json(post);
   } catch (error) {
     next(error);
   }

@@ -4,6 +4,7 @@ import {
   featurePost,
   getPost,
   getPosts,
+  updatePost,
   uploadAuth,
 } from '@/controllers/post.controller';
 import increaseVisit from '@/middlewares/increaseVisit';
@@ -24,6 +25,8 @@ function asyncHandler(
 expressRouter.get('/', asyncHandler(getPosts));
 expressRouter.get('/upload-auth', asyncHandler(uploadAuth));
 expressRouter.get('/:slug', increaseVisit, asyncHandler(getPost));
+expressRouter.get('/:slug/edit', requireAuth(), asyncHandler(getPost));
+expressRouter.put('/:id', requireAuth(), asyncHandler(updatePost));
 expressRouter.patch('/feature', asyncHandler(featurePost));
 expressRouter.post('/', requireAuth(), asyncHandler(createPost));
 expressRouter.delete('/:id', requireAuth(), asyncHandler(deletePost));

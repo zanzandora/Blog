@@ -44,7 +44,6 @@ const SingerPostPage = () => {
   if (!data) {
     return <span>Post not found</span>;
   }
-  console.log(data);
 
   return (
     <div className='flex flex-col gap-8 lg:mx-1  mt-4'>
@@ -76,12 +75,12 @@ const SingerPostPage = () => {
       <div className='flex flex-col md:flex-row gap-8'>
         {/* texts */}
         <div
-          className='lg:text-lg text-justify flex flex-col gap-8 '
+          className='lg:text-lg text-justify flex flex-col gap-8 w-full'
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(data.content) }}
         ></div>
 
         {/* menu */}
-        <div className='px-4 w-3/4 h-max  sticky top-0 hidden lg:block'>
+        <div className='px-4  h-max  sticky top-0 hidden lg:block'>
           <h1 className=' mb-4 text-sm font-medium'>Author</h1>
           <div className='flex flex-col gap-2 '>
             <div className='flex items-center gap-2'>

@@ -1,5 +1,5 @@
 import { useAuth, useUser } from '@clerk/clerk-react';
-import { Trash2, Bookmark, Star } from 'lucide-react';
+import { Trash2, Bookmark, Star, RotateCcwSquare } from 'lucide-react';
 import { Post } from '@/types';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import axios from 'axios';
@@ -141,12 +141,16 @@ const PostMenuActions = ({ post }: Props) => {
     deleteMutation.mutate();
   };
 
+  const handleUpdate = () => {
+    navigate(`/write/${post.slug}`);
+  };
+
   const handleFeature = () => {
     featureMutation.mutate();
   };
 
   return (
-    <div>
+    <div className=''>
       <h1 className='mt-8 mb-4 text-sm font-medium'>Action</h1>
       {/* SAVE BTN */}
       <div
@@ -162,6 +166,15 @@ const PostMenuActions = ({ post }: Props) => {
         ) : (
           <span>Save post</span>
         )}
+      </div>
+
+      {/* UPDATE BTN */}
+      <div
+        onClick={handleUpdate}
+        className='flex items-center gap-2 pb-2 text-sm cursor-pointer'
+      >
+        <RotateCcwSquare color='green' fill='none' />
+        <span>Update post</span>
       </div>
 
       {/* FEATURE BTN */}
@@ -193,7 +206,7 @@ const PostMenuActions = ({ post }: Props) => {
           isAdmin) && (
           <div
             onClick={handleDelete}
-            className='flex items-center gap-2 py-2 text-sm cursor-pointer'
+            className='flex items-center gap-2 pb-2 text-sm cursor-pointer'
           >
             <Trash2 color='red' />
 

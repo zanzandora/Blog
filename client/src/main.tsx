@@ -74,6 +74,11 @@ const router = createBrowserRouter([
         errorElement: <div>404 Not Found</div>,
       },
       {
+        path: '/write/:slug',
+        element: <WritePage />,
+        errorElement: <div>404 Not Found</div>,
+      },
+      {
         path: '/:slug',
         element: <SingerPostPage />,
         errorElement: <div>404 Not Found</div>,

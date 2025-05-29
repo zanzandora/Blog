@@ -6,6 +6,7 @@ export type Post = {
   user: {
     username: string;
     img: string;
+    clerkUserId: string;
   };
   category: string;
   isFeature?: boolean;
