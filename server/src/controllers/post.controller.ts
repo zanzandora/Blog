@@ -200,8 +200,12 @@ export const updatePost = async (
       return res.status(404).json({ message: 'Post not found' });
     }
 
+    const role =
+      (req.auth.sessionClaims?.metadata as { role?: string } | undefined)
+        ?.role || 'user';
+
     // Kiểm tra quyền sở hữu
-    if (post.user.toString() !== user._id.toString()) {
+    if (post.user.toString() !== user._id.toString() && role !== 'admin') {
       return res
         .status(403)
         .json({ message: 'You are not the owner of this post' });
