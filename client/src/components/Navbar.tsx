@@ -6,14 +6,16 @@ import {
   NavigationMenuLink,
 } from '@/components/ui/navigation-menu';
 import { Button } from '@/components/ui/button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useIsMobile } from '@/hooks/useIsMobie';
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Bookmark } from 'lucide-react';
 
 export default function Navbar() {
   const isMobile = useIsMobile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -54,21 +56,6 @@ export default function Navbar() {
         </NavigationMenuLink>
       </NavigationMenuItem>
 
-      {/* About */}
-      <SignedIn>
-        <NavigationMenuItem>
-          <NavigationMenuLink asChild className='text-black'>
-            <Link
-              to='/my-save-post'
-              className='px-4 py-2 text-lg font-medium hover:bg-gray-100 rounded transition-colors'
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              My Save Post
-            </Link>
-          </NavigationMenuLink>
-        </NavigationMenuItem>
-      </SignedIn>
-
       {/* Contact */}
       <NavigationMenuItem>
         <NavigationMenuLink asChild className='text-black'>
@@ -95,7 +82,15 @@ export default function Navbar() {
           </Link>
         </SignedOut>
         <SignedIn>
-          <UserButton />
+          <UserButton>
+            <UserButton.MenuItems>
+              <UserButton.Action
+                label='Post saved'
+                labelIcon={<Bookmark width={16} height={16} />}
+                onClick={() => navigate('/my-save-post')}
+              />
+            </UserButton.MenuItems>
+          </UserButton>
         </SignedIn>
       </NavigationMenuItem>
     </>
